@@ -1,26 +1,25 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout.tsx';
-import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
-import { useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import Login from './routes/Login.tsx';
 import Loading from './routes/Loading.tsx';
 import Home from './routes/Home.tsx';
 
 function App() {
-  const { user, isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
 
   return (
     <BrowserRouter>
       <Routes>
         {isLoading ? (
-          <Route path="/" element={<Loading />} />
+          <Route path={'/'} element={<Loading />} />
         ) : isAuthenticated ? (
-          <Route path="/" element={<Layout />}>
+          <Route element={<Layout />}>
             <Route path={'/'} element={<Home />} />
           </Route>
         ) : (
-          <Route path="/" element={<Login />} />
+          <Route path={'/'} element={<Login />} />
         )}
       </Routes>
     </BrowserRouter>
