@@ -5,6 +5,7 @@ import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 import { useEffect } from 'react';
 import Login from './routes/Login.tsx';
 import Loading from './routes/Loading.tsx';
+import Home from './routes/Home.tsx';
 
 function App() {
   const { user, isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
@@ -15,7 +16,9 @@ function App() {
         {isLoading ? (
           <Route path="/" element={<Loading />} />
         ) : isAuthenticated ? (
-          <Route path="/" element={<Layout />}></Route>
+          <Route path="/" element={<Layout />}>
+            <Route path={'/'} element={<Home />} />
+          </Route>
         ) : (
           <Route path="/" element={<Login />} />
         )}

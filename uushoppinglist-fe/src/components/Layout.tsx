@@ -1,15 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
-import { Button } from '@mui/material';
+import Header from './Header.tsx';
 
 const Layout = () => {
-  const { user, isAuthenticated, loginWithRedirect, isLoading, logout } = useAuth0();
-
   return (
     <>
+      <Header />
       <Outlet />
-      {user && <div>{user.name}</div>}
-      <Button onClick={() => logout()}>Logout</Button>
     </>
   );
 };
