@@ -15,6 +15,18 @@
     "@jridgewell/gen-mapping" "^0.3.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
+"@auth0/auth0-react@^2.2.1":
+  version "2.2.1"
+  resolved "https://repo.plus4u.net/operatorGate/repository/public-javascript/@auth0/auth0-react/-/auth0-react-2.2.1.tgz#f1d3ff6ea9144d8bba0597e86beb5cb1d57301cb"
+  integrity sha512-4L4FZvSqIwzVk5mwWFbWzfJ4Zq11dgS0v4KIGKro5tL9dgOnBGq+Ino/1mzexPV1LJHBkfwXG4+IaPiQNz5CGg==
+  dependencies:
+    "@auth0/auth0-spa-js" "^2.1.2"
+
+"@auth0/auth0-spa-js@^2.1.2":
+  version "2.1.2"
+  resolved "https://repo.plus4u.net/operatorGate/repository/public-javascript/@auth0/auth0-spa-js/-/auth0-spa-js-2.1.2.tgz#2217db13ce0feb480a190ed165b36681bd48633c"
+  integrity sha512-xdA65Z/U7++Y7L9Uwh8Q8OVOs6qgFz+fb7GAzHFjpr1icO37B//xdzLXm7ZRgA19RWrsNe1nme3h896igJSvvw==
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.22.13":
   version "7.22.13"
   resolved "https://repo.plus4u.net/operatorGate/repository/public-javascript/@babel/code-frame/-/code-frame-7.22.13.tgz#e3c1c099402598483b7a8c46a721d1038803755e"
@@ -1128,6 +1140,11 @@ escape-string-regexp@^4.0.0:
   version "4.0.0"
   resolved "https://repo.plus4u.net/operatorGate/repository/public-javascript/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz#14ba83a5d373e3d311e5afca29cf5bfad965bf34"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
+
+eslint-config-prettier@^9.0.0:
+  version "9.0.0"
+  resolved "https://repo.plus4u.net/operatorGate/repository/public-javascript/eslint-config-prettier/-/eslint-config-prettier-9.0.0.tgz#eb25485946dd0c66cd216a46232dc05451518d1f"
+  integrity sha512-IcJsTkJae2S35pRsRAwoCE+925rJJStOdkKnLVgtE+tEpqU0EVVM7OqrwxqgptKdX29NUwC82I5pXsGFIgSevw==
 
 eslint-plugin-react-hooks@^4.6.0:
   version "4.6.0"
