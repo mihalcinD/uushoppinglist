@@ -41,14 +41,14 @@ const UseList = () => {
     });
   };
 
-  //method to toggle check item from list just for testing purposes, will be replaced with api call
-  const toggleCheckItem = (id: string) => {
+  //method to set check item from list just for testing purposes, will be replaced with api call
+  const setCheckItem = (id: string, checked: boolean) => {
     setList(prevState => {
       return {
         ...prevState,
         items: prevState.items.map(item => {
           if (item.id === id) {
-            return { ...item, checked: !item.checked };
+            return { ...item, checked: checked };
           }
           return item;
         }),
@@ -70,7 +70,7 @@ const UseList = () => {
     }, 1000);
   }, []);
 
-  return { list, isLoading, addItem, removeItem, toggleCheckItem, removeMember };
+  return { list, isLoading, addItem, removeItem, setCheckItem, removeMember };
 };
 
 export default UseList;

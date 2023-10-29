@@ -8,7 +8,7 @@ type Props = {
   isOwner: boolean;
   isLoading: boolean;
 };
-const ListName = ({ name, isOwner, isLoading = false }: Props) => {
+const ListName = ({ name, isOwner, isLoading }: Props) => {
   const [value, setValue] = useState<string>(name);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
@@ -22,9 +22,9 @@ const ListName = ({ name, isOwner, isLoading = false }: Props) => {
   };
 
   return (
-    <Box display={'flex'} flexDirection={'row'} gap={3} alignItems={'center'}>
+    <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
       {isLoading ? (
-        <Skeleton variant="text" sx={{ fontSize: '4.5rem' }} width={500} />
+        <Skeleton variant="rounded" width={500} height={80} />
       ) : (
         <>
           {isEditing ? (
