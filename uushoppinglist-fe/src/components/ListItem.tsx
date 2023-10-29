@@ -1,11 +1,13 @@
 import { Box, Typography, Checkbox } from '@mui/material';
 import { ListItem as ListItemType } from '../types/List.ts';
+import MoreButton from './MoreButton.tsx';
 
 type Props = {
   item: ListItemType;
   setChecked: (id: string, checked: boolean) => void;
+  deleteItem: (id: string) => void;
 };
-const ListItem = ({ item, setChecked }: Props) => {
+const ListItem = ({ item, setChecked, deleteItem }: Props) => {
   return (
     <Box
       display={'flex'}
@@ -17,6 +19,7 @@ const ListItem = ({ item, setChecked }: Props) => {
       sx={{ borderBottom: 1, borderColor: 'grey.500' }}>
       <Typography sx={{ ...(item.checked ? { textDecoration: 'line-through' } : {}) }}>{item.name}</Typography>
       <Box display={'flex'} flexDirection={'row'} gap={2} alignItems={'center'}>
+        <MoreButton deleteItem={() => deleteItem(item.id)} />
         <Checkbox
           defaultChecked={item.checked}
           onChange={(event, checked) => {
