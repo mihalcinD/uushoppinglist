@@ -24,39 +24,43 @@ const ListName = ({ name, isOwner, isLoading = false }: Props) => {
   return (
     <Box display={'flex'} flexDirection={'row'} gap={3} alignItems={'center'}>
       {isLoading ? (
-        <Skeleton variant="text" sx={{ fontSize: '4rem' }} width={400} />
-      ) : isEditing ? (
-        <TextField
-          id="outlined-basic"
-          variant="standard"
-          value={value}
-          onChange={onChange}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              submit();
-              e.preventDefault();
-            }
-          }}
-        />
+        <Skeleton variant="text" sx={{ fontSize: '4.5rem' }} width={500} />
       ) : (
-        <Typography variant="h2" component={'h1'} sx={{ fontWeight: '600' }}>
-          {value}
-        </Typography>
-      )}
-      {isOwner && (
-        <IconButton
-          aria-label="edit"
-          size="large"
-          onClick={() =>
-            setIsEditing(prevState => {
-              if (prevState) {
-                submit();
-              }
-              return !prevState;
-            })
-          }>
-          <EditIcon fontSize="inherit" />
-        </IconButton>
+        <>
+          {isEditing ? (
+            <TextField
+              id="outlined-basic"
+              variant="standard"
+              value={value}
+              onChange={onChange}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  submit();
+                  e.preventDefault();
+                }
+              }}
+            />
+          ) : (
+            <Typography variant="h2" component={'h1'} sx={{ fontWeight: '600' }}>
+              {value}
+            </Typography>
+          )}
+          {isOwner && (
+            <IconButton
+              aria-label="edit"
+              size="large"
+              onClick={() =>
+                setIsEditing(prevState => {
+                  if (prevState) {
+                    submit();
+                  }
+                  return !prevState;
+                })
+              }>
+              <EditIcon fontSize="inherit" />
+            </IconButton>
+          )}
+        </>
       )}
     </Box>
   );

@@ -1,11 +1,13 @@
 import { Typography } from '@mui/material';
 import ContentWrapper from '../components/ContentWrapper.tsx';
 import ListName from '../components/ListName.tsx';
+import useList from '../hooks/useList.ts';
 
 const ListDetail = () => {
+  const { list, isLoading } = useList();
   return (
     <ContentWrapper>
-      <ListName name={'Shopping list 1'} isOwner={true} id={'xx'} isLoading={false} />
+      <ListName name={list.name} isOwner={list.isOwner} id={list.id} isLoading={isLoading} />
     </ContentWrapper>
   );
 };
