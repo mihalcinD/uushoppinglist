@@ -2,14 +2,18 @@ import ContentWrapper from '../components/ContentWrapper.tsx';
 import ListName from '../components/ListName.tsx';
 import useList from '../hooks/useList.ts';
 import SegmentedButtons from '../components/SegmentedButtons.tsx';
-import { Box } from '@mui/material';
+import { Box, Fab, IconButton } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import ItemsList from '../components/ItemsList.tsx';
+import ButtonsGroup from '../components/ButtonsGroup.tsx';
 
 const ListDetail = () => {
-  const { list, isLoading, setName, getUnCheckedItems, getAllItems } = useList();
+  const { list, isLoading, setName, getUnCheckedItems, getAllItems, setCheckItem, addItem } = useList();
   return (
     <ContentWrapper>
       <ListName name={list.name} isOwner={list.isOwner} id={list.id} isLoading={isLoading} setName={setName} />
-      <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'}>
+      <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'}>
         <SegmentedButtons
           isLoading={isLoading}
           actions={[
@@ -29,7 +33,9 @@ const ListDetail = () => {
             },
           ]}
         />
+        <ButtonsGroup isLoading={isLoading} addItem={addItem} />
       </Box>
+      <ItemsList items={list.items} setChecked={setCheckItem} />
     </ContentWrapper>
   );
 };

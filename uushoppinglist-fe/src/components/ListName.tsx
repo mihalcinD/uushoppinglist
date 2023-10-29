@@ -23,11 +23,11 @@ const ListName = ({ name, isOwner, isLoading, setName }: Props) => {
   };
 
   return (
-    <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
+    <>
       {isLoading ? (
-        <Skeleton variant="rounded" width={500} height={80} />
+        <Skeleton variant="rounded" width={500} height={64} />
       ) : (
-        <>
+        <Box display={'flex'} flexDirection={'row'} alignItems={'center'} gap={2}>
           {isEditing ? (
             <TextField
               id="outlined-basic"
@@ -43,7 +43,7 @@ const ListName = ({ name, isOwner, isLoading, setName }: Props) => {
             />
           ) : (
             <Typography variant="h2" component={'h1'} sx={{ fontWeight: '600' }}>
-              {value}
+              {name}
             </Typography>
           )}
           {isOwner && (
@@ -61,9 +61,9 @@ const ListName = ({ name, isOwner, isLoading, setName }: Props) => {
               <EditIcon fontSize="inherit" />
             </IconButton>
           )}
-        </>
+        </Box>
       )}
-    </Box>
+    </>
   );
 };
 

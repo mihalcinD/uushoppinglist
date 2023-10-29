@@ -29,9 +29,12 @@ const UseList = () => {
   const [list, setList] = useState<List>(mockList);
 
   //method to add item to list just for testing purposes, will be replaced with api call
-  const addItem = (name: string) => {
+  const addItem = () => {
     setList(prevState => {
-      return { ...prevState, items: [...prevState.items, { id: 'zz', name, checked: false }] };
+      return {
+        ...prevState,
+        items: [...prevState.items, { id: 'zz' + Math.random() * 100, name: 'New Item', checked: false }],
+      };
     });
   };
 
