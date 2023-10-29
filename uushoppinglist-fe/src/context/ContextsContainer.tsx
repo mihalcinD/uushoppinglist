@@ -1,18 +1,19 @@
 import { Auth0Provider } from '@auth0/auth0-react';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
 type Props = {
   children: JSX.Element;
 };
 const ContextsContainer = ({ children }: Props) => {
-  const darkTheme = createTheme({
+  let theme = createTheme({
     palette: {
       mode: 'dark',
     },
   });
+  theme = responsiveFontSizes(theme);
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <Auth0Provider
         domain="dev-4ojfaid8tmaplkrp.us.auth0.com"
         clientId="sg6O1UtekVdCSt56cD0DB7VRYTqxGhc8"

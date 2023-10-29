@@ -10,7 +10,7 @@ const Loading = () => {
       height={'100vh'}
       sx={{ backgroundColor: 'background.default' }}>
       <Typography variant="h3" component={'h1'}>
-        Loading...
+        Authentication in progress...
       </Typography>
     </Box>
   );
