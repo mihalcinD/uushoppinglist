@@ -2,17 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import { Auth0Provider } from '@auth0/auth0-react';
+import ContextsContainer from './context/ContextsContainer.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Auth0Provider
-      domain="dev-4ojfaid8tmaplkrp.us.auth0.com"
-      clientId="sg6O1UtekVdCSt56cD0DB7VRYTqxGhc8"
-      authorizationParams={{
-        redirect_uri: window.location.origin,
-      }}>
+    <ContextsContainer>
       <App />
-    </Auth0Provider>
+    </ContextsContainer>
   </React.StrictMode>,
 );

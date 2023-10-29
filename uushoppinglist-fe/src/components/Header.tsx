@@ -16,7 +16,6 @@ const Header = () => {
     <AppBar position="static">
       <Toolbar
         sx={{
-          backgroundColor: 'primary.main',
           justifyContent: 'flex-end',
         }}>
         <Box sx={{ flexGrow: 0 }}>

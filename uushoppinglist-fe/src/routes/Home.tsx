@@ -1,10 +1,18 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const Home = () => {
   return (
-    <Typography variant={'h3'} component={'h3'}>
-      Home
-    </Typography>
+    <Box
+      display={'flex'}
+      alignItems={'center'}
+      justifyContent={'center'}
+      width={'100%'}
+      height={'100%'}
+      sx={{ backgroundColor: 'background.default' }}>
+      <Typography variant="h3" component={'h1'} color={'text.primary'}>
+        Home
+      </Typography>
+    </Box>
   );
 };
 
