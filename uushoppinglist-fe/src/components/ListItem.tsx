@@ -32,6 +32,7 @@ const ListItem = ({ item, setChecked, deleteItem, setItemName }: Props) => {
         <Checkbox
           defaultChecked={item.checked}
           onChange={(event, checked) => {
+            event.preventDefault();
             setChecked(item.id, checked);
           }}
         />

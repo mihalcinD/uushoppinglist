@@ -8,6 +8,7 @@ type Props = {
 const SegmentedButtons = ({ actions, isLoading }: Props) => {
   const [selected, setSelected] = useState<string>(actions[0].value);
   const handleChange = (event: MouseEvent<HTMLElement>, newValue: string) => {
+    event.preventDefault();
     setSelected(newValue);
     actions.find(action => action.value === newValue)?.onSelect();
   };
