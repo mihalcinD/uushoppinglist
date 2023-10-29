@@ -7,7 +7,8 @@ import ItemsList from '../components/ItemsList.tsx';
 import ButtonsGroup from '../components/ButtonsGroup.tsx';
 
 const ListDetail = () => {
-  const { list, isLoading, setName, getUnCheckedItems, getAllItems, setCheckItem, addItem, removeItem } = useList();
+  const { list, isLoading, setName, getUnCheckedItems, getAllItems, setCheckItem, addItem, removeItem, removeMember } =
+    useList();
   return (
     <ContentWrapper>
       <ListName name={list.name} isOwner={list.isOwner} id={list.id} isLoading={isLoading} setName={setName} />
@@ -31,7 +32,7 @@ const ListDetail = () => {
             },
           ]}
         />
-        <ButtonsGroup isLoading={isLoading} addItem={addItem} />
+        <ButtonsGroup isLoading={isLoading} addItem={addItem} members={list.members} onUserDelete={removeMember} />
       </Box>
       <ItemsList items={list.items} setChecked={setCheckItem} isLoading={isLoading} deleteItem={removeItem} />
     </ContentWrapper>

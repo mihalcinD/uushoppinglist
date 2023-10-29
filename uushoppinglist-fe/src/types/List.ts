@@ -1,7 +1,7 @@
 export type List = {
   id: string;
-  owner: { id: string; name: string };
-  members: { id: string; name: string }[];
+  owner: User;
+  members: User[];
   name: string;
   archived: boolean;
   items: ListItem[];
@@ -9,3 +9,4 @@ export type List = {
 };
 
 export type ListItem = { id: string; name: string; checked: boolean };
+export type User = { id: string; name: string };

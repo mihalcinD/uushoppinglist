@@ -6,7 +6,7 @@ const mockList: List = {
   owner: { id: 'xx', name: 'David' },
   members: [
     { id: 'xx', name: 'Jakub' },
-    { id: 'xx', name: 'Vlada' },
+    { id: 'yy', name: 'Vlada' },
   ],
   name: 'Shopping List 1',
   archived: false,
