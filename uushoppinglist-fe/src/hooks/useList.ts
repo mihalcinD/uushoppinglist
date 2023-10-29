@@ -1,31 +1,32 @@
 import { useEffect, useState } from 'react';
 import { List } from '../types/List.ts';
 
+const mockList: List = {
+  id: 'xx',
+  owner: { id: 'xx', name: 'David' },
+  members: [
+    { id: 'xx', name: 'Jakub' },
+    { id: 'xx', name: 'Vlada' },
+  ],
+  name: 'Shopping List 1',
+  archived: false,
+  items: [
+    {
+      id: 'xx',
+      name: 'Milk',
+      checked: false,
+    },
+    {
+      id: 'yy',
+      name: 'Bread',
+      checked: true,
+    },
+  ],
+  isOwner: true,
+};
 const UseList = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [list, setList] = useState<List>({
-    id: 'xx',
-    owner: { id: 'xx', name: 'David' },
-    members: [
-      { id: 'xx', name: 'Jakub' },
-      { id: 'xx', name: 'Vlada' },
-    ],
-    name: 'Shopping List 1',
-    archived: false,
-    items: [
-      {
-        id: 'xx',
-        name: 'Milk',
-        checked: false,
-      },
-      {
-        id: 'yy',
-        name: 'Bread',
-        checked: true,
-      },
-    ],
-    isOwner: true,
-  });
+  const [list, setList] = useState<List>(mockList);
 
   //method to add item to list just for testing purposes, will be replaced with api call
   const addItem = (name: string) => {
@@ -63,6 +64,33 @@ const UseList = () => {
     });
   };
 
+  //method to set name of list just for testing purposes, will be replaced with api call
+  const setName = (name: string) => {
+    setList(prevState => {
+      return { ...prevState, name: name };
+    });
+  };
+
+  //method to get unChecked items from list just for testing purposes, will be replaced with api call
+  const getUnCheckedItems = () => {
+    setList(prevState => {
+      return {
+        ...prevState,
+        items: prevState.items.filter(item => !item.checked),
+      };
+    });
+  };
+
+  //method to get all items from list just for testing purposes, will be replaced with api call
+  const getAllItems = () => {
+    setList(prevState => {
+      return {
+        ...prevState,
+        items: mockList.items,
+      };
+    });
+  };
+
   useEffect(() => {
     //fake api call delay
     setTimeout(() => {
@@ -70,7 +98,7 @@ const UseList = () => {
     }, 1000);
   }, []);
 
-  return { list, isLoading, addItem, removeItem, setCheckItem, removeMember };
+  return { list, isLoading, addItem, removeItem, setCheckItem, removeMember, setName, getAllItems, getUnCheckedItems };
 };
 
 export default UseList;

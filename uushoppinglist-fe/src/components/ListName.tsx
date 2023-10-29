@@ -7,8 +7,9 @@ type Props = {
   name: string;
   isOwner: boolean;
   isLoading: boolean;
+  setName: (name: string) => void;
 };
-const ListName = ({ name, isOwner, isLoading }: Props) => {
+const ListName = ({ name, isOwner, isLoading, setName }: Props) => {
   const [value, setValue] = useState<string>(name);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
@@ -18,7 +19,7 @@ const ListName = ({ name, isOwner, isLoading }: Props) => {
 
   const submit = () => {
     setIsEditing(false);
-    //send edited
+    setName(value);
   };
 
   return (
