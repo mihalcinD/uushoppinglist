@@ -9,7 +9,7 @@ const Loading = () => {
       width={'100vw'}
       height={'100vh'}
       sx={{ backgroundColor: 'background.default' }}>
-      <Typography variant="h3" component={'h1'} color={'text.primary'}>
+      <Typography variant="h3" component={'h1'}>
         Loading...
       </Typography>
     </Box>

@@ -1,5 +1,6 @@
 import { Auth0Provider } from '@auth0/auth0-react';
 import { createTheme, ThemeProvider } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 
 type Props = {
   children: JSX.Element;
@@ -7,7 +8,7 @@ type Props = {
 const ContextsContainer = ({ children }: Props) => {
   const darkTheme = createTheme({
     palette: {
-      mode: 'light',
+      mode: 'dark',
     },
   });
   return (
@@ -18,6 +19,7 @@ const ContextsContainer = ({ children }: Props) => {
         authorizationParams={{
           redirect_uri: window.location.origin,
         }}>
+        <CssBaseline />
         {children}
       </Auth0Provider>
     </ThemeProvider>

@@ -1,13 +1,13 @@
 import { Container, Typography } from '@mui/material';
 
-const Home = () => {
+const ListDetail = () => {
   return (
     <Container maxWidth={'xl'}>
       <Typography variant="h3" component={'h1'}>
-        Home
+        Home1
       </Typography>
     </Container>
   );
 };
 
-export default Home;
+export default ListDetail;
