@@ -1,12 +1,13 @@
-import { Container, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import ContentWrapper from '../components/ContentWrapper.tsx';
 
 const ListDetail = () => {
   return (
-    <Container maxWidth={'xl'}>
-      <Typography variant="h3" component={'h1'}>
-        Home1
+    <ContentWrapper>
+      <Typography variant="h1" component={'h1'} sx={{ fontWeight: '500' }}>
+        Shopping List 1
       </Typography>
-    </Container>
+    </ContentWrapper>
   );
 };
 
