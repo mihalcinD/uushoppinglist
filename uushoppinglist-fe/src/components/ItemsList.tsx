@@ -7,8 +7,9 @@ type Props = {
   setChecked: (id: string, checked: boolean) => void;
   deleteItem: (id: string) => void;
   isLoading: boolean;
+  setItemName: (name: string, id: string) => void;
 };
-const ItemsList = ({ items, setChecked, isLoading, deleteItem }: Props) => {
+const ItemsList = ({ items, setChecked, isLoading, deleteItem, setItemName }: Props) => {
   return (
     <Box display={'flex'} flexDirection={'column'}>
       {isLoading ? (
@@ -20,7 +21,13 @@ const ItemsList = ({ items, setChecked, isLoading, deleteItem }: Props) => {
       ) : (
         <>
           {items.map((item, index) => (
-            <ListItem item={item} setChecked={setChecked} key={index} deleteItem={deleteItem} />
+            <ListItem
+              item={item}
+              setChecked={setChecked}
+              key={index}
+              deleteItem={deleteItem}
+              setItemName={setItemName}
+            />
           ))}
         </>
       )}

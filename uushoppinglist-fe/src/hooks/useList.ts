@@ -93,6 +93,20 @@ const UseList = () => {
       };
     });
   };
+  //method to set item name from list just for testing purposes, will be replaced with api call
+  const setItemName = (name: string, id: string) => {
+    setList(prevState => {
+      return {
+        ...prevState,
+        items: prevState.items.map(item => {
+          if (item.id === id) {
+            return { ...item, name: name };
+          }
+          return item;
+        }),
+      };
+    });
+  };
 
   useEffect(() => {
     //fake api call delay
@@ -101,7 +115,18 @@ const UseList = () => {
     }, 1000);
   }, []);
 
-  return { list, isLoading, addItem, removeItem, setCheckItem, removeMember, setName, getAllItems, getUnCheckedItems };
+  return {
+    list,
+    isLoading,
+    addItem,
+    removeItem,
+    setCheckItem,
+    removeMember,
+    setName,
+    getAllItems,
+    getUnCheckedItems,
+    setItemName,
+  };
 };
 
 export default UseList;
