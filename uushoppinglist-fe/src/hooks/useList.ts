@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { List } from '../types/List.ts';
+import { ListDetail } from '../types/List.ts';
 
-const mockList: List = {
+const mockList: ListDetail = {
   id: 'xx',
   owner: { id: 'xx', name: 'David' },
   members: [
@@ -26,7 +26,7 @@ const mockList: List = {
 };
 const UseList = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [list, setList] = useState<List>(mockList);
+  const [list, setList] = useState<ListDetail>(mockList);
 
   //method to add item to list just for testing purposes, will be replaced with api call
   const addItem = () => {
