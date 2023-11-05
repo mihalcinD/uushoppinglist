@@ -1,12 +1,15 @@
-import { Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Skeleton, ToggleButton, ToggleButtonGroup, useMediaQuery, useTheme } from '@mui/material';
 import { MouseEvent, useState } from 'react';
 
 type Props = {
   actions: { value: string; label: string; onSelect: () => void }[];
   isLoading: boolean;
+  fullWidth?: boolean;
 };
-const SegmentedButtons = ({ actions, isLoading }: Props) => {
+const SegmentedButtons = ({ actions, isLoading, fullWidth }: Props) => {
   const [selected, setSelected] = useState<string>(actions[0].value);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const handleChange = (event: MouseEvent<HTMLElement>, newValue: string) => {
     event.preventDefault();
     setSelected(newValue);
@@ -19,6 +22,7 @@ const SegmentedButtons = ({ actions, isLoading }: Props) => {
         <Skeleton variant="rounded" width={100} height={60} />
       ) : (
         <ToggleButtonGroup
+          fullWidth={fullWidth && isSmallScreen}
           color="primary"
           value={selected}
           exclusive
