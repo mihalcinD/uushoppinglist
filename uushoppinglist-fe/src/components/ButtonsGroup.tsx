@@ -16,8 +16,8 @@ const ButtonsGroup = ({ isLoading, addItem, members, onUserDelete }: Props) => {
       {isLoading ? (
         <Skeleton variant="circular" width={56} height={56} />
       ) : (
-        <Fab color="primary" aria-label="add">
-          <AddIcon onClick={addItem} />
+        <Fab color="primary" aria-label="add" onClick={addItem}>
+          <AddIcon />
         </Fab>
       )}
     </Box>
