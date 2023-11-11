@@ -3,11 +3,14 @@ import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { MouseEvent, useState } from 'react';
 
 type Props = {
-  deleteItem: () => void;
+  actions: { name: string; action: () => void }[];
 };
-const MoreButton = ({ deleteItem }: Props) => {
+const MoreButton = ({ deleteItem, actions }: Props) => {
   const [anchorMenu, setMenu] = useState<HTMLElement>();
   const handleOpenMenu = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+    console.log('Button clicked');
     setMenu(event.currentTarget);
   };
   const handleCloseMenu = () => {
@@ -15,7 +18,11 @@ const MoreButton = ({ deleteItem }: Props) => {
   };
   return (
     <>
-      <IconButton aria-label="more" size="large" onClick={handleOpenMenu}>
+      <IconButton
+        onMouseDown={event => event.stopPropagation()}
+        aria-label="more"
+        size="medium"
+        onClick={handleOpenMenu}>
         <MoreVertIcon fontSize="inherit" />
       </IconButton>
       <Menu
@@ -33,9 +40,11 @@ const MoreButton = ({ deleteItem }: Props) => {
         }}
         open={Boolean(anchorMenu)}
         onClose={handleCloseMenu}>
-        <MenuItem onClick={deleteItem}>
-          <Typography textAlign="center">Delete</Typography>
-        </MenuItem>
+        {actions.map((action, index) => (
+          <MenuItem key={index} onClick={action.action}>
+            <Typography textAlign="center">{action.name}</Typography>
+          </MenuItem>
+        ))}
       </Menu>
     </>
   );

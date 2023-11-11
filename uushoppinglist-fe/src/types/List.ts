@@ -11,9 +11,9 @@ export type ListDetail = {
 export type ListItem = { id: string; name: string; checked: boolean };
 export type User = { id: string; name: string };
 
-export type Lists = {
+export type List = {
   id: string;
   name: string;
-  archived: boolean;
   isOwner: boolean;
-}[];
+  isArchived: boolean;
+};

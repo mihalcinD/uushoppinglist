@@ -1,10 +1,11 @@
-import { Box, Button, Chip, Fab, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Chip, Fab, IconButton, TextField, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import React, { useState } from 'react';
 import ModalBox from './Modal.tsx';
 import { useListsContext } from '../context/ListsContext.tsx';
 import { useAuth0, User } from '@auth0/auth0-react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const AddListButton = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -22,10 +23,9 @@ const AddListButton = () => {
         <AddIcon />
       </Fab>
       <ModalBox open={isVisible} handleClose={() => setIsVisible(false)} title={'Create new list'}>
-        <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'}>
+        <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} mt={5}>
           <TextField
             label="Name"
-            variant={'standard'}
             value={name}
             error={error}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,9 +33,46 @@ const AddListButton = () => {
               setName(event.target.value);
             }}
           />
-          <Button variant={'outlined'} onClick={() => {}} color={'primary'}>
+          <Button
+            variant={'outlined'}
+            onClick={() => {
+              setItems(items => {
+                if (items) return [...items, 'Item Name'];
+                else return ['Item Name'];
+              });
+            }}
+            color={'primary'}>
             Add Item
           </Button>
+        </Box>
+
+        <Box display={'flex'} flexDirection={'column'} mt={5}>
+          {items &&
+            items.map((item, index) => (
+              <Box
+                display={'flex'}
+                justifyContent={'space-between'}
+                alignItems={'center'}
+                width={'100%'}
+                sx={{ borderBottom: 1, borderColor: 'grey.500' }}
+                py={1}>
+                <Typography
+                  sx={{ verticalAlign: 'center' }}
+                  suppressContentEditableWarning={true}
+                  contentEditable={true}
+                  onBlur={e => {
+                    items[index] = e.target.innerText || '';
+                  }}>
+                  {item}
+                </Typography>
+                <IconButton
+                  onClick={() => {
+                    setItems(items => items?.filter((_, i) => i !== index));
+                  }}>
+                  <DeleteIcon />
+                </IconButton>
+              </Box>
+            ))}
         </Box>
 
         <Box display={'flex'} mt={10}>
