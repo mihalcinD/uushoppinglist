@@ -7,7 +7,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 type Props = {
   isLoading: boolean;
-  members: User[];
+  members?: User[];
   onDeleteUser: (id: string) => void;
 };
 const MembersButton = ({ isLoading, members, onDeleteUser }: Props) => {
@@ -30,16 +30,17 @@ const MembersButton = ({ isLoading, members, onDeleteUser }: Props) => {
         </Box>
 
         <Stack direction="row" spacing={1}>
-          {members.map((member, index) => (
-            <Chip
-              icon={<AccountCircleIcon />}
-              label={member.name}
-              key={index}
-              onDelete={() => {
-                onDeleteUser(member.id);
-              }}
-            />
-          ))}
+          {members &&
+            members.map((member, index) => (
+              <Chip
+                icon={<AccountCircleIcon />}
+                label={member.name}
+                key={index}
+                onDelete={() => {
+                  onDeleteUser(member.id);
+                }}
+              />
+            ))}
         </Stack>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'} mt={15}>
           <Button variant={'contained'} onClick={() => {}} color={'error'}>

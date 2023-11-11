@@ -25,7 +25,7 @@ const mockList: ListDetail = {
   isOwner: true,
 };
 type Props = {
-  id: string;
+  id: string | undefined;
 };
 const UseList = ({ id }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -117,11 +117,16 @@ const UseList = ({ id }: Props) => {
   };
 
   useEffect(() => {
+    if (id) {
+      setName(mockList.name + ' (ID: #' + id + ')');
+      //refetch
+    }
+
     //fake api call delay
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-  }, []);
+  }, [id]);
 
   return {
     list,

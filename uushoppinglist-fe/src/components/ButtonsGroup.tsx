@@ -6,7 +6,7 @@ import { User } from '../types/List.ts';
 type Props = {
   isLoading: boolean;
   addItem: () => void;
-  members: User[];
+  members?: User[];
   onUserDelete: (id: string) => void;
 };
 const ButtonsGroup = ({ isLoading, addItem, members, onUserDelete }: Props) => {

@@ -20,10 +20,10 @@ const ListDetail = () => {
     removeItem,
     removeMember,
     setItemName,
-  } = useList(id);
+  } = useList({ id });
   return (
     <ContentWrapper>
-      <ListName name={`List ${id}`} isOwner={list.isOwner} id={list.id} isLoading={isLoading} setName={setName} />
+      <ListName name={list?.name} isOwner={list?.isOwner} id={list?.id} isLoading={isLoading} setName={setName} />
       <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'}>
         <SegmentedButtons
           isLoading={isLoading}
@@ -44,10 +44,10 @@ const ListDetail = () => {
             },
           ]}
         />
-        <ButtonsGroup isLoading={isLoading} addItem={addItem} members={list.members} onUserDelete={removeMember} />
+        <ButtonsGroup isLoading={isLoading} addItem={addItem} members={list?.members} onUserDelete={removeMember} />
       </Box>
       <ItemsList
-        items={list.items}
+        items={list?.items}
         setChecked={setCheckItem}
         isLoading={isLoading}
         deleteItem={removeItem}

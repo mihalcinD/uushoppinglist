@@ -3,14 +3,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import React, { useState } from 'react';
 
 type Props = {
-  id: string;
-  name: string;
-  isOwner: boolean;
-  isLoading: boolean;
+  id?: string;
+  name?: string;
+  isOwner?: boolean;
+  isLoading?: boolean;
   setName: (name: string) => void;
 };
 const ListName = ({ name, isOwner, isLoading, setName }: Props) => {
-  const [value, setValue] = useState<string>(name);
+  const [value, setValue] = useState<string | undefined>(name);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,8 +18,10 @@ const ListName = ({ name, isOwner, isLoading, setName }: Props) => {
   };
 
   const submit = () => {
-    setIsEditing(false);
-    setName(value);
+    if (value) {
+      setIsEditing(false);
+      setName(value);
+    }
   };
 
   return (
