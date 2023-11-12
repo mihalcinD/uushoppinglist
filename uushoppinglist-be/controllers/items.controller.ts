@@ -1,11 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
+import { validate } from '../helpers/validator';
+import { itemsSchema } from '../schemas/items.schema';
+import { generalSchema } from '../schemas/general.schema';
 
 export const createItem = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		//create item
+		const data = req.body;
+		validate(itemsSchema.createSchema, data);
 		res.status(200).json({
 			success: true,
-			data: 'createItem',
+			data: {
+				input: data,
+			},
 		});
 	} catch (error) {
 		next(error);
@@ -14,10 +20,15 @@ export const createItem = async (req: Request, res: Response, next: NextFunction
 
 export const patchItem = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		//patch item
+		const data = req.body;
+		const id = req.params.id;
+		validate(generalSchema.identifierSchema, id);
+		validate(itemsSchema.updateSchema, data);
 		res.status(200).json({
 			success: true,
-			data: 'patchItem',
+			data: {
+				input: data,
+			},
 		});
 	} catch (error) {
 		next(error);
@@ -26,11 +37,9 @@ export const patchItem = async (req: Request, res: Response, next: NextFunction)
 
 export const deleteItem = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		//patch item
-		res.status(204).json({
-			success: true,
-			data: 'deleteItem',
-		});
+		const id = req.params.id;
+		validate(generalSchema.identifierSchema, id);
+		res.status(204).json({});
 	} catch (error) {
 		next(error);
 	}

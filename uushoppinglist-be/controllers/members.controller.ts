@@ -1,11 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
+import { validate } from '../helpers/validator';
+import { membersSchema } from '../schemas/members.schema';
+import { generalSchema } from '../schemas/general.schema';
 
 export const addMember = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		//add member
+		const data = req.body;
+		validate(membersSchema.addSchema, data);
 		res.status(200).json({
 			success: true,
-			data: 'addMember',
+			data: {
+				input: data,
+			},
 		});
 	} catch (error) {
 		next(error);
@@ -14,11 +20,9 @@ export const addMember = async (req: Request, res: Response, next: NextFunction)
 
 export const deleteMember = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		//delete member
-		res.status(204).json({
-			success: true,
-			data: 'deleteMember',
-		});
+		const id = req.params.id;
+		validate(generalSchema.identifierSchema, id);
+		res.status(204).json({});
 	} catch (error) {
 		next(error);
 	}

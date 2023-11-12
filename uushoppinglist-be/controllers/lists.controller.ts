@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateError } from '../helpers/Error';
 import { validate } from '../helpers/validator';
 import { generalSchema } from '../schemas/general.schema';
 import { listsSchema } from '../schemas/lists.schema';
@@ -48,6 +47,8 @@ export const createList = async (req: Request, res: Response, next: NextFunction
 export const patchList = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const data = req.body;
+		const id = req.params.listID;
+		validate(generalSchema.identifierSchema, id);
 		validate(listsSchema.updateSchema, data);
 		res.status(200).json({
 			success: true,
