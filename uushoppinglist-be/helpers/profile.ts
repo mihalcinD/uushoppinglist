@@ -35,6 +35,7 @@ export const isAuthorized = (userID: string, listID: string, profiles: Array<Pro
 };
 
 const getProfile = (userID: string, listID: string): Profiles | undefined => {
+	//currently mock data, but will be replaced with database call to get list by listID
 	const mockList = { ownerID: 'xx', memberIDs: ['xx', 'yy'] };
 	if (userID === mockList.ownerID) return Profiles.OWNER;
 	if (mockList.memberIDs.includes(userID)) return Profiles.MEMBER;

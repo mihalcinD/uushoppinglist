@@ -24,7 +24,7 @@ app.use('/lists', listRoute);
 app.use('/lists/:listID/items', itemsRoute);
 app.use('/lists/:listID/members', membersRoute);
 app.use((req, res, next) => {
-	throw CreateError('Not Found', 404);
+	throw CreateError('Not Found :(', 404);
 });
 
 app.use(ErrorHandler);

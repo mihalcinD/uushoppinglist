@@ -14,7 +14,6 @@ export const restrict = (profiles: Array<Profiles>) => {
 		} else {
 			throw CreateError('User Authorization was not successful.', 403);
 		}
-
 		next();
 	};
 };
