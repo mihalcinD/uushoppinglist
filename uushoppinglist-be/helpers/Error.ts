@@ -1,6 +1,6 @@
-export const CreateError = (message: string, statusCode: number) => {
+export const CreateError = (reason: string | object, statusCode: number) => {
 	const error: any = new Error();
-	error.message = message;
+	error.message = reason;
 	error.statusCode = statusCode;
 	return error;
 };

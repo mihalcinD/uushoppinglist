@@ -38,6 +38,7 @@ const updateSchema = {
 		},
 	},
 	anyOf: [{ required: ['name'] }, { required: ['isArchived'] }],
+	additionalProperties: false,
 };
 
 export const listsSchema = {

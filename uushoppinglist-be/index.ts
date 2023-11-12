@@ -18,13 +18,15 @@ const jwtCheck = auth({
 });
 
 app.use(cors());
+app.use(express.json());
+//uncomment next line to enable oauth authentication
 //app.use(jwtCheck);
 
 app.use('/lists', listRoute);
 app.use('/lists/:listID/items', itemsRoute);
 app.use('/lists/:listID/members', membersRoute);
 app.use((req, res, next) => {
-	throw CreateError('Not Found :(', 404);
+	next(CreateError('Not Found :(', 404));
 });
 
 app.use(ErrorHandler);

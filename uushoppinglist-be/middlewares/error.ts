@@ -6,7 +6,7 @@ const ErrorHandler = (err: any, req: Request, res: Response, next: NextFunction)
 	res.status(status).json({
 		success: false,
 		status,
-		message,
+		reason: message,
 		stack: process.env.NODE_ENV !== 'development' ? {} : err.stack,
 	});
 };

@@ -10,5 +10,4 @@ router.get('/:listID', restrict([Profiles.OWNER, Profiles.MEMBER]), getList);
 router.post('/', createList);
 router.patch('/:listID', restrict([Profiles.OWNER]), patchList);
 router.delete('/:listID', restrict([Profiles.OWNER]), deleteList);
-
 export default router;
