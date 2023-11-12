@@ -32,7 +32,9 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   borderRadius: 5,
-  width: '50%',
+  width: { xs: '90%', sm: '70%', md: '50%' },
+  maxHeight: '90%',
+  overflow: 'auto',
   p: 4,
 };
 

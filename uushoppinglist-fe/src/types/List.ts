@@ -1,4 +1,4 @@
-export type List = {
+export type ListDetail = {
   id: string;
   owner: User;
   members: User[];
@@ -10,3 +10,10 @@ export type List = {
 
 export type ListItem = { id: string; name: string; checked: boolean };
 export type User = { id: string; name: string };
+
+export type List = {
+  id: string;
+  name: string;
+  isOwner: boolean;
+  isArchived: boolean;
+};

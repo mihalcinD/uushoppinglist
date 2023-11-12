@@ -28,7 +28,7 @@ const ListItem = ({ item, setChecked, deleteItem, setItemName }: Props) => {
         {item.name}
       </Typography>
       <Box display={'flex'} flexDirection={'row'} gap={2} alignItems={'center'}>
-        <MoreButton deleteItem={() => deleteItem(item.id)} />
+        <MoreButton actions={[{ name: 'Delete', action: () => deleteItem(item.id) }]} />
         <Checkbox
           defaultChecked={item.checked}
           onChange={(event, checked) => {

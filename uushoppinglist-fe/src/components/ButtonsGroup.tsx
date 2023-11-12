@@ -6,7 +6,7 @@ import { User } from '../types/List.ts';
 type Props = {
   isLoading: boolean;
   addItem: () => void;
-  members: User[];
+  members?: User[];
   onUserDelete: (id: string) => void;
 };
 const ButtonsGroup = ({ isLoading, addItem, members, onUserDelete }: Props) => {
@@ -16,8 +16,8 @@ const ButtonsGroup = ({ isLoading, addItem, members, onUserDelete }: Props) => {
       {isLoading ? (
         <Skeleton variant="circular" width={56} height={56} />
       ) : (
-        <Fab color="primary" aria-label="add">
-          <AddIcon onClick={addItem} />
+        <Fab color="primary" aria-label="add" onClick={addItem}>
+          <AddIcon />
         </Fab>
       )}
     </Box>

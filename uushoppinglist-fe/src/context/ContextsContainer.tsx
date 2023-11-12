@@ -1,6 +1,7 @@
 import { Auth0Provider } from '@auth0/auth0-react';
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ListsProvider } from './ListsContext.tsx';
 
 type Props = {
   children: JSX.Element;
@@ -20,8 +21,10 @@ const ContextsContainer = ({ children }: Props) => {
         authorizationParams={{
           redirect_uri: window.location.origin,
         }}>
-        <CssBaseline />
-        {children}
+        <ListsProvider>
+          <CssBaseline />
+          {children}
+        </ListsProvider>
       </Auth0Provider>
     </ThemeProvider>
   );

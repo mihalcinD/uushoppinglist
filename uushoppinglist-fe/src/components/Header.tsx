@@ -5,7 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const { logout } = useAuth0();
+  const { logout, user } = useAuth0();
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -44,6 +44,9 @@ const Header = () => {
             }}
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}>
+            <Box px={2} pt={1} pb={2}>
+              <Typography textAlign="center">{user?.email}</Typography>
+            </Box>
             <MenuItem onClick={() => logout()}>
               <Typography textAlign="center">Logout</Typography>
             </MenuItem>

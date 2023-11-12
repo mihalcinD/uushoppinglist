@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { List } from '../types/List.ts';
+import { ListDetail } from '../types/List.ts';
 
-const mockList: List = {
+const mockList: ListDetail = {
   id: 'xx',
   owner: { id: 'xx', name: 'David' },
   members: [
@@ -24,96 +24,109 @@ const mockList: List = {
   ],
   isOwner: true,
 };
-const UseList = () => {
+type Props = {
+  id: string | undefined;
+};
+const UseList = ({ id }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [list, setList] = useState<List>(mockList);
+  const [list, setList] = useState<ListDetail | undefined>(mockList);
 
   //method to add item to list just for testing purposes, will be replaced with api call
   const addItem = () => {
     setList(prevState => {
-      return {
-        ...prevState,
-        items: [...prevState.items, { id: 'zz' + Math.random() * 100, name: 'New Item', checked: false }],
-      };
+      if (prevState)
+        return {
+          ...prevState,
+          items: [...prevState.items, { id: 'zz' + Math.random() * 100, name: 'New Item', checked: false }],
+        };
     });
   };
 
   //method to remove item from list just for testing purposes, will be replaced with api call
   const removeItem = (id: string) => {
     setList(prevState => {
-      return { ...prevState, items: prevState.items.filter(item => item.id !== id) };
+      if (prevState) return { ...prevState, items: prevState.items.filter(item => item.id !== id) };
     });
   };
 
   //method to set check item from list just for testing purposes, will be replaced with api call
   const setCheckItem = (id: string, checked: boolean) => {
     setList(prevState => {
-      return {
-        ...prevState,
-        items: prevState.items.map(item => {
-          if (item.id === id) {
-            return { ...item, checked: checked };
-          }
-          return item;
-        }),
-      };
+      if (prevState)
+        return {
+          ...prevState,
+          items: prevState.items.map(item => {
+            if (item.id === id) {
+              return { ...item, checked: checked };
+            }
+            return item;
+          }),
+        };
     });
   };
 
   //method to remove member from list just for testing purposes, will be replaced with api call
   const removeMember = (id: string) => {
     setList(prevState => {
-      return { ...prevState, members: prevState.members.filter(member => member.id !== id) };
+      if (prevState) return { ...prevState, members: prevState.members.filter(member => member.id !== id) };
     });
   };
 
   //method to set name of list just for testing purposes, will be replaced with api call
   const setName = (name: string) => {
     setList(prevState => {
-      return { ...prevState, name: name };
+      if (prevState) return { ...prevState, name: name };
     });
   };
 
   //method to get unChecked items from list just for testing purposes, will be replaced with api call
   const getUnCheckedItems = () => {
     setList(prevState => {
-      return {
-        ...prevState,
-        items: prevState.items.filter(item => !item.checked),
-      };
+      if (prevState)
+        return {
+          ...prevState,
+          items: prevState.items.filter(item => !item.checked),
+        };
     });
   };
 
   //method to get all items from list just for testing purposes, will be replaced with api call
   const getAllItems = () => {
     setList(prevState => {
-      return {
-        ...prevState,
-        items: mockList.items,
-      };
+      if (prevState)
+        return {
+          ...prevState,
+          items: mockList.items,
+        };
     });
   };
   //method to set item name from list just for testing purposes, will be replaced with api call
   const setItemName = (name: string, id: string) => {
     setList(prevState => {
-      return {
-        ...prevState,
-        items: prevState.items.map(item => {
-          if (item.id === id) {
-            return { ...item, name: name };
-          }
-          return item;
-        }),
-      };
+      if (prevState)
+        return {
+          ...prevState,
+          items: prevState.items.map(item => {
+            if (item.id === id) {
+              return { ...item, name: name };
+            }
+            return item;
+          }),
+        };
     });
   };
 
   useEffect(() => {
+    if (id) {
+      setName(mockList.name + ' (ID: #' + id + ')');
+      //refetch
+    }
+
     //fake api call delay
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-  }, []);
+  }, [id]);
 
   return {
     list,
