@@ -29,7 +29,7 @@ export const deleteItem = async (req: Request, res: Response, next: NextFunction
 		//patch item
 		res.status(200).json({
 			success: true,
-			data: 'patchItem',
+			data: 'deleteItem',
 		});
 	} catch (error) {
 		next(error);
