@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { CreateError } from '../helpers/Error';
 
 export const getLists = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -51,7 +52,7 @@ export const patchList = async (req: Request, res: Response, next: NextFunction)
 export const deleteList = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		//delete list
-		res.status(200).json({
+		res.status(204).json({
 			success: true,
 			data: 'deleteList',
 		});

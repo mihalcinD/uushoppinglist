@@ -15,7 +15,7 @@ export const addMember = async (req: Request, res: Response, next: NextFunction)
 export const deleteMember = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		//delete member
-		res.status(200).json({
+		res.status(204).json({
 			success: true,
 			data: 'deleteMember',
 		});

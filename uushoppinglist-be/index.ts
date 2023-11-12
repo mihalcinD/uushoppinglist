@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { auth } from 'express-oauth2-jwt-bearer';
 import ErrorHandler from './middlewares/error';
 import { itemsRoute, listRoute, membersRoute } from './routes';
+import { CreateError } from './helpers/Error';
 
 dotenv.config();
 
@@ -22,6 +23,9 @@ app.use(cors());
 app.use('/lists', listRoute);
 app.use('/lists/:listID/items', itemsRoute);
 app.use('/lists/:listID/members', membersRoute);
+app.use((req, res, next) => {
+	throw CreateError('Not Found', 404);
+});
 
 app.use(ErrorHandler);
 

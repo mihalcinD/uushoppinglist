@@ -27,7 +27,7 @@ export const patchItem = async (req: Request, res: Response, next: NextFunction)
 export const deleteItem = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		//patch item
-		res.status(200).json({
+		res.status(204).json({
 			success: true,
 			data: 'deleteItem',
 		});
