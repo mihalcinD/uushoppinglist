@@ -4,7 +4,7 @@ type List = {
 	name: string;
 	ownerID: string;
 	membersIDs: Array<string>;
-	archived: boolean;
+	isArchived: boolean;
 	items: Array<ListItem>;
 	createdAt: Date;
 	updatedAt: Date;
@@ -20,18 +20,19 @@ const ListSchema = new mongoose.Schema<List>(
 		ownerID: {
 			type: String,
 			required: true,
-			unique: true,
 		},
 		membersIDs: {
 			type: [String],
 			required: true,
 		},
-		archived: {
+		isArchived: {
 			type: Boolean,
 			required: true,
 		},
 		items: {
-			type: [{ id: String, name: String, checked: Boolean }],
+			type: [
+				{ id: Schema.Types.ObjectId, name: { type: String, required: true }, checked: { type: Boolean, default: false } },
+			],
 			required: true,
 		},
 		createdAt: { type: Date, default: Date.now },

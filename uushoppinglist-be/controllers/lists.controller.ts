@@ -1,11 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
-import { validate } from '../helpers/validator';
+import { validate, validateSub } from '../helpers/validator';
 import { generalSchema } from '../schemas/general.schema';
 import { listsSchema } from '../schemas/lists.schema';
+import List from '../models/list.model';
+import { CreateError } from '../helpers/Error';
 
 export const getLists = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		next({ working: true });
+		//validateSub(req.auth?.payload.sub);
+		const testingSub = req.auth?.payload.sub ?? 111;
+		const lists = await List.find({ $or: [{ ownerID: testingSub }, { membersIDs: testingSub }] }).catch(err => {
+			throw CreateError(err, 500);
+		});
+		next(lists);
 	} catch (error) {
 		next(error);
 	}
@@ -15,8 +22,10 @@ export const getList = async (req: Request, res: Response, next: NextFunction) =
 	try {
 		const id = req.params.listID;
 		validate(generalSchema.identifierSchema, id);
-
-		next([id]);
+		const list = await List.findById(id).catch(err => {
+			throw CreateError(err, 500);
+		});
+		next(list);
 	} catch (error) {
 		next(error);
 	}
@@ -26,13 +35,18 @@ export const createList = async (req: Request, res: Response, next: NextFunction
 	try {
 		const data = req.body;
 		validate(listsSchema.createSchema, data);
-
-		res.status(200).json({
-			success: true,
-			data: {
-				input: data,
-			},
+		//validateSub(req.auth?.payload.sub);
+		const testingSub = req.auth?.payload.sub ?? 111;
+		const list = await List.create({
+			ownerID: testingSub,
+			membersIDs: [testingSub, ...(data.membersIDs ?? [])],
+			name: data.name,
+			isArchived: false,
+			items: data.items ?? [],
+		}).catch(err => {
+			throw CreateError(err, 500);
 		});
+		next(list);
 	} catch (error) {
 		next(error);
 	}
@@ -44,12 +58,10 @@ export const patchList = async (req: Request, res: Response, next: NextFunction)
 		const id = req.params.listID;
 		validate(generalSchema.identifierSchema, id);
 		validate(listsSchema.updateSchema, data);
-		res.status(200).json({
-			success: true,
-			data: {
-				input: data,
-			},
+		const list = await List.findByIdAndUpdate(id, data, { returnDocument: 'after' }).catch(err => {
+			throw CreateError(err, 500);
 		});
+		next(list);
 	} catch (error) {
 		next(error);
 	}
@@ -59,6 +71,9 @@ export const deleteList = async (req: Request, res: Response, next: NextFunction
 	try {
 		const id = req.params.listID;
 		validate(generalSchema.identifierSchema, id);
+		await List.findByIdAndDelete(id).catch(err => {
+			throw CreateError(err, 500);
+		});
 		res.status(204);
 		next({});
 	} catch (error) {

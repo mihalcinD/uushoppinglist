@@ -17,13 +17,17 @@ const createSchema = {
 		items: {
 			type: 'array',
 			items: {
-				type: 'string',
-				minLength: 1,
+				type: 'object',
+				properties: {
+					name: { type: 'string', minLength: 1 },
+					checked: { type: 'boolean' },
+				},
+				required: ['name'],
 			},
 		},
 	},
 	additionalProperties: false,
-	required: ['name', 'memberIDs', 'items'],
+	required: ['name'],
 };
 
 const updateSchema = {
