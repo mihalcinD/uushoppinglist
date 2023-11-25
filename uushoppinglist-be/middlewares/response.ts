@@ -7,8 +7,8 @@ const ResponseHandler = (result: any, req: Request, res: Response, next: NextFun
 	}
 	res.json({
 		success: true,
-		result,
-		errors: null,
+		result: result.data ?? result,
+		errors: result.errors ?? null,
 	});
 };
 

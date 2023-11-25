@@ -31,7 +31,7 @@ const ListSchema = new mongoose.Schema<List>(
 		},
 		items: {
 			type: [
-				{ id: Schema.Types.ObjectId, name: { type: String, required: true }, checked: { type: Boolean, default: false } },
+				{ id: Schema.Types.ObjectId, name: { type: String, required: true }, isDone: { type: Boolean, default: false } },
 			],
 			required: true,
 		},

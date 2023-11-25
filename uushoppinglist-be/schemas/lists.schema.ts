@@ -20,7 +20,7 @@ const createSchema = {
 				type: 'object',
 				properties: {
 					name: { type: 'string', minLength: 1 },
-					checked: { type: 'boolean' },
+					isDone: { type: 'boolean' },
 				},
 				required: ['name'],
 			},

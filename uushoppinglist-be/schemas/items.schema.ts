@@ -26,6 +26,7 @@ const updateSchema = {
 		},
 	},
 	anyOf: [{ required: ['name'] }, { required: ['isDone'] }],
+	additionalProperties: false,
 };
 
 export const itemsSchema = {
