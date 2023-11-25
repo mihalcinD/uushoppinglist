@@ -7,7 +7,7 @@ import { CreateError } from '../helpers/Error';
 
 export const getLists = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const sub = req.auth?.payload.sub ?? 'auth0|654b628d57241546d4718ae4';
+		const sub = req.auth?.payload.sub;
 		validate(generalSchema.userIdentifierSchema, sub);
 		const lists = await List.find({ $or: [{ ownerID: sub }, { membersIDs: sub }] }).catch(err => {
 			throw CreateError(err, 500);
@@ -35,7 +35,7 @@ export const createList = async (req: Request, res: Response, next: NextFunction
 	try {
 		const data = req.body;
 		validate(listsSchema.createSchema, data);
-		const sub = req.auth?.payload.sub ?? 'auth0|654b628d57241546d4718ae4';
+		const sub = req.auth?.payload.sub;
 		validate(generalSchema.userIdentifierSchema, sub);
 		const list = await List.create({
 			ownerID: sub,
