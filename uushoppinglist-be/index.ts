@@ -6,6 +6,7 @@ import ErrorHandler from './middlewares/error';
 import { itemsRoute, listRoute, membersRoute } from './routes';
 import { CreateError } from './helpers/Error';
 import mongoose from 'mongoose';
+import ResponseHandler from './middlewares/response';
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 	next(CreateError('Not Found :(', 404));
 });
 
+app.use(ResponseHandler);
 app.use(ErrorHandler);
 
 app.listen(PORT, () => {
