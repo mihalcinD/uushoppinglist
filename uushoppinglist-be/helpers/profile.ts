@@ -26,7 +26,12 @@ export async function getUserInfo(req: Request): Promise<User | undefined> {
 	});
 }
 
-export const isAuthorized = async (userID: string, listID: string, profiles: Array<Profiles>): Promise<boolean> => {
+export const isAuthorized = async (
+	userID: string | undefined,
+	listID: string,
+	profiles: Array<Profiles>,
+): Promise<boolean> => {
+	if (!userID) return false;
 	const profile = await getProfile(userID, listID);
 	if (profile)
 		profiles.forEach(_profile => {
@@ -36,12 +41,10 @@ export const isAuthorized = async (userID: string, listID: string, profiles: Arr
 };
 
 const getProfile = async (userID: string, listID: string): Promise<Profiles | undefined> => {
-	//currently mock data, but will be replaced with database call to get list by listID
-	const mockList = { ownerID: 'xx', memberIDs: ['xx', 'yy'] };
 	const list = await List.findById(listID);
 	if (list) {
-		if (userID === mockList.ownerID) return Profiles.OWNER;
-		if (mockList.memberIDs.includes(userID)) return Profiles.MEMBER;
+		if (userID === list.ownerID) return Profiles.OWNER;
+		if (list.membersIDs.includes(userID)) return Profiles.MEMBER;
 	}
 	return;
 };
