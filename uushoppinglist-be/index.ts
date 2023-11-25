@@ -31,7 +31,7 @@ const jwtCheck = auth({
 app.use(cors());
 app.use(express.json());
 //uncomment next line to enable oauth authentication
-//app.use(jwtCheck);
+app.use(jwtCheck);
 
 app.use('/lists', listRoute);
 app.use('/lists/:listID/items', itemsRoute);

@@ -34,9 +34,9 @@ export const isAuthorized = async (
 	if (!userID) return false;
 	const profile = await getProfile(userID, listID);
 	if (profile)
-		profiles.forEach(_profile => {
+		for (let _profile of profiles) {
 			if (_profile === profile) return true;
-		});
+		}
 	return false;
 };
 

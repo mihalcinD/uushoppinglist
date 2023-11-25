@@ -47,7 +47,7 @@ const Header = () => {
             <Box px={2} pt={1} pb={2}>
               <Typography textAlign="center">{user?.email}</Typography>
             </Box>
-            <MenuItem onClick={() => logout()}>
+            <MenuItem onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
               <Typography textAlign="center">Logout</Typography>
             </MenuItem>
           </Menu>
