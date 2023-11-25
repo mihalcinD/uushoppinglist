@@ -29,7 +29,7 @@ export const deleteMember = async (req: Request, res: Response, next: NextFuncti
 		const id = req.params.id;
 		const listID = req.params.listID;
 		validate(generalSchema.identifierSchema, listID);
-		validate(generalSchema.identifierSchema, id);
+		validate(generalSchema.userIdentifierSchema, id);
 		await List.findByIdAndUpdate(listID, { $pull: { membersIDs: id } }).catch(err => {
 			throw CreateError(err, 500);
 		});
