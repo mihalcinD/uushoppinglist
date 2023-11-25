@@ -5,8 +5,18 @@ import { auth } from 'express-oauth2-jwt-bearer';
 import ErrorHandler from './middlewares/error';
 import { itemsRoute, listRoute, membersRoute } from './routes';
 import { CreateError } from './helpers/Error';
+import mongoose from 'mongoose';
 
 dotenv.config();
+
+mongoose.connect(process.env.MONGODB_URI as string).then(
+	() => {
+		console.log('Connected to database');
+	},
+	err => {
+		console.log('Error connecting to database: ', err);
+	},
+);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
