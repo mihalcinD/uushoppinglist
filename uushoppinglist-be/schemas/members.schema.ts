@@ -1,12 +1,12 @@
 import Ajv from 'ajv';
-import { identifierSchema } from './general.schema';
+import { userIdentifierSchema } from './general.schema';
 
 const ajv = new Ajv();
 
 const addSchema = {
 	type: 'object',
 	properties: {
-		memberID: identifierSchema,
+		memberID: userIdentifierSchema,
 	},
 	additionalProperties: false,
 	required: ['memberID'],

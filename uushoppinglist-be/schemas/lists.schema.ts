@@ -1,5 +1,5 @@
 import Ajv from 'ajv';
-import { identifierSchema } from './general.schema';
+import { identifierSchema, userIdentifierSchema } from './general.schema';
 
 const ajv = new Ajv();
 
@@ -12,18 +12,22 @@ const createSchema = {
 		},
 		memberIDs: {
 			type: 'array',
-			items: identifierSchema,
+			items: userIdentifierSchema,
 		},
 		items: {
 			type: 'array',
 			items: {
-				type: 'string',
-				minLength: 1,
+				type: 'object',
+				properties: {
+					name: { type: 'string', minLength: 1 },
+					isDone: { type: 'boolean' },
+				},
+				required: ['name'],
 			},
 		},
 	},
 	additionalProperties: false,
-	required: ['name', 'memberIDs', 'items'],
+	required: ['name'],
 };
 
 const updateSchema = {
