@@ -3,6 +3,7 @@ import axios from 'axios';
 import { User } from '../types/user';
 import { Profiles } from '../types/enums/profiles';
 import List from '../models/list.model';
+
 export async function getUserInfo(req: Request): Promise<User | undefined> {
 	const uri = process.env.ISSUER_BASE_URL + '/userinfo';
 
@@ -40,7 +41,8 @@ export const isAuthorized = async (
 	return false;
 };
 
-const getProfile = async (userID: string, listID: string): Promise<Profiles | undefined> => {
+export const getProfile = async (userID: string | undefined, listID: string): Promise<Profiles | undefined> => {
+	if (!userID) return;
 	const list = await List.findById(listID);
 	if (list) {
 		if (userID === list.ownerID) return Profiles.OWNER;

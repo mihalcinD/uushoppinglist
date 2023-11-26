@@ -12,7 +12,15 @@ export const getLists = async (req: Request, res: Response, next: NextFunction) 
 		const lists = await List.find({ $or: [{ ownerID: sub }, { membersIDs: sub }] }).catch(err => {
 			throw CreateError(err, 500);
 		});
-		next(lists);
+
+		let editedLists = [];
+		for (let list of lists) {
+			// @ts-ignore
+			let editedList: typeof list & { isOwner: boolean } = list.toObject();
+			editedList.isOwner = list.ownerID === sub;
+			editedLists.push(editedList);
+		}
+		next(editedLists);
 	} catch (error) {
 		next(error);
 	}
@@ -21,11 +29,18 @@ export const getLists = async (req: Request, res: Response, next: NextFunction) 
 export const getList = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const id = req.params.listID;
+		const sub = req.auth?.payload.sub;
 		validate(generalSchema.identifierSchema, id);
+		validate(generalSchema.userIdentifierSchema, sub);
 		const list = await List.findById(id).catch(err => {
 			throw CreateError(err, 500);
 		});
-		next(list);
+
+		//@ts-ignore
+		let editedList: typeof list & { isOwner: boolean } = list.toObject();
+		editedList.isOwner = editedList.ownerID === sub;
+
+		next(editedList);
 	} catch (error) {
 		next(error);
 	}
@@ -34,8 +49,8 @@ export const getList = async (req: Request, res: Response, next: NextFunction) =
 export const createList = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const data = req.body;
-		validate(listsSchema.createSchema, data);
 		const sub = req.auth?.payload.sub;
+		validate(listsSchema.createSchema, data);
 		validate(generalSchema.userIdentifierSchema, sub);
 		const list = await List.create({
 			ownerID: sub,
@@ -46,7 +61,12 @@ export const createList = async (req: Request, res: Response, next: NextFunction
 		}).catch(err => {
 			throw CreateError(err, 500);
 		});
-		next(list);
+
+		//@ts-ignore
+		let editedList: typeof list & { isOwner: boolean } = list.toObject();
+		editedList.isOwner = editedList.ownerID === sub;
+
+		next(editedList);
 	} catch (error) {
 		next(error);
 	}
@@ -56,12 +76,19 @@ export const patchList = async (req: Request, res: Response, next: NextFunction)
 	try {
 		const data = req.body;
 		const id = req.params.listID;
+		const sub = req.auth?.payload.sub;
 		validate(generalSchema.identifierSchema, id);
 		validate(listsSchema.updateSchema, data);
+		validate(generalSchema.userIdentifierSchema, sub);
 		const list = await List.findByIdAndUpdate(id, data, { returnDocument: 'after' }).catch(err => {
 			throw CreateError(err, 500);
 		});
-		next(list);
+
+		//@ts-ignore
+		let editedList: typeof list & { isOwner: boolean } = list.toObject();
+		editedList.isOwner = editedList.ownerID === sub;
+
+		next(editedList);
 	} catch (error) {
 		next(error);
 	}
