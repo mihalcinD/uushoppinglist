@@ -1,44 +1,46 @@
 import { useEffect, useState } from 'react';
-import { ListDetail } from '../types/List.ts';
+import { List } from '../types/List.ts';
+import useGet from './api/crud/useGet.ts';
+import { ApiUrl } from './api/api.const.ts';
+import usePost from './api/crud/usePost.ts';
+import { AddItemPayload } from '../types/Item.ts';
 
-const mockList: ListDetail = {
-  id: 'xx',
-  owner: { id: 'xx', name: 'David' },
-  members: [
-    { id: 'xx', name: 'Jakub' },
-    { id: 'yy', name: 'Vlada' },
-  ],
-  name: 'Shopping List 1',
-  archived: false,
-  items: [
-    {
-      id: 'xx',
-      name: 'Milk',
-      checked: false,
-    },
-    {
-      id: 'yy',
-      name: 'Bread',
-      checked: true,
-    },
-  ],
-  isOwner: true,
-};
 type Props = {
   id: string | undefined;
 };
 const UseList = ({ id }: Props) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [list, setList] = useState<ListDetail | undefined>(mockList);
+  const { data: list, refetch, isLoading } = useGet<List>({ url: ApiUrl([id]).list });
+  const [localList, setLocalList] = useState<List | undefined>();
+  const { post: postItem } = usePost<AddItemPayload, List>({ url: ApiUrl([id]).addItems });
+  const [filter, setFilter] = useState<'all' | 'notDone'>('all');
 
-  //method to add item to list just for testing purposes, will be replaced with api call
+  useEffect(() => {
+    if (list) {
+      switch (filter) {
+        case 'notDone':
+          getUnCheckedItems();
+          break;
+        default:
+          getAllItems();
+      }
+      setLocalList(list);
+    }
+  }, [list, filter]);
+
+  useEffect(() => {
+    refetch();
+  }, [id]);
+
   const addItem = () => {
-    setList(prevState => {
-      if (prevState)
-        return {
-          ...prevState,
-          items: [...prevState.items, { id: 'zz' + Math.random() * 100, name: 'New Item', checked: false }],
-        };
+    return new Promise<void>((resolve, reject) => {
+      postItem({ name: 'New Item' })
+        .then(() => {
+          refetch();
+          resolve();
+        })
+        .catch(() => {
+          reject();
+        });
     });
   };
 
@@ -46,22 +48,6 @@ const UseList = ({ id }: Props) => {
   const removeItem = (id: string) => {
     setList(prevState => {
       if (prevState) return { ...prevState, items: prevState.items.filter(item => item.id !== id) };
-    });
-  };
-
-  //method to set check item from list just for testing purposes, will be replaced with api call
-  const setCheckItem = (id: string, checked: boolean) => {
-    setList(prevState => {
-      if (prevState)
-        return {
-          ...prevState,
-          items: prevState.items.map(item => {
-            if (item.id === id) {
-              return { ...item, checked: checked };
-            }
-            return item;
-          }),
-        };
     });
   };
 
@@ -79,24 +65,22 @@ const UseList = ({ id }: Props) => {
     });
   };
 
-  //method to get unChecked items from list just for testing purposes, will be replaced with api call
   const getUnCheckedItems = () => {
-    setList(prevState => {
+    setLocalList(prevState => {
       if (prevState)
         return {
           ...prevState,
-          items: prevState.items.filter(item => !item.checked),
+          items: prevState.items.filter(item => !item.isDone),
         };
     });
   };
 
-  //method to get all items from list just for testing purposes, will be replaced with api call
   const getAllItems = () => {
-    setList(prevState => {
-      if (prevState)
+    setLocalList(prevState => {
+      if (prevState && list)
         return {
           ...prevState,
-          items: mockList.items,
+          items: list.items,
         };
     });
   };
@@ -116,29 +100,18 @@ const UseList = ({ id }: Props) => {
     });
   };
 
-  useEffect(() => {
-    if (id) {
-      setName(mockList.name + ' (ID: #' + id + ')');
-      //refetch
-    }
-
-    //fake api call delay
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, [id]);
-
   return {
-    list,
+    list: localList,
     isLoading,
     addItem,
     removeItem,
-    setCheckItem,
     removeMember,
     setName,
     getAllItems,
     getUnCheckedItems,
     setItemName,
+    setFilter,
+    filter,
   };
 };
 

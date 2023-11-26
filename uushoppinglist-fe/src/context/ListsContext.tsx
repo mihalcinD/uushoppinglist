@@ -15,10 +15,6 @@ type ListsContextType = {
   addList: (name: string) => Promise<void>;
   isLoading: boolean;
   deleteList: (id: string) => Promise<void>;
-  getArchivedLists: () => void;
-  getAllLists: () => void;
-  getMyLists: () => void;
-  getSharedLists: () => void;
   setArchived: (id: string, isArchived: boolean) => Promise<void>;
   filter: 'all' | 'owner' | 'member' | 'archived';
   setFilter: React.Dispatch<React.SetStateAction<'all' | 'owner' | 'member' | 'archived'>>;
@@ -37,6 +33,10 @@ export const ListsProvider = ({ children }: Props) => {
   const { _delete } = useDelete({ url: ApiUrl().deleteList });
   const { patch } = usePatch<UpdateListPayload, List>({ url: ApiUrl().updateList });
   const [filter, setFilter] = useState<'all' | 'owner' | 'member' | 'archived'>('all');
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   useEffect(() => {
     if (lists) {
@@ -60,6 +60,7 @@ export const ListsProvider = ({ children }: Props) => {
     return new Promise<void>((resolve, reject) => {
       post({ name })
         .then(list => {
+          console.log(list);
           refetch();
           resolve();
         })
@@ -131,10 +132,6 @@ export const ListsProvider = ({ children }: Props) => {
         addList,
         isLoading,
         deleteList,
-        getAllLists,
-        getArchivedLists,
-        getMyLists,
-        getSharedLists,
         setArchived,
         filter,
         setFilter,

@@ -19,21 +19,21 @@ const ListItem = ({ item, setChecked, deleteItem, setItemName }: Props) => {
       py={2}
       sx={{ borderBottom: 1, borderColor: 'grey.500' }}>
       <Typography
-        sx={{ ...(item.checked ? { textDecoration: 'line-through' } : {}) }}
+        sx={{ ...(item.isDone ? { textDecoration: 'line-through' } : {}) }}
         suppressContentEditableWarning={true}
         contentEditable={true}
         onBlur={e => {
-          setItemName(e.target.innerText || '', item.id);
+          setItemName(e.target.innerText || '', item._id);
         }}>
         {item.name}
       </Typography>
       <Box display={'flex'} flexDirection={'row'} gap={2} alignItems={'center'}>
-        <MoreButton actions={[{ name: 'Delete', action: () => deleteItem(item.id) }]} />
+        <MoreButton actions={[{ name: 'Delete', action: () => deleteItem(item._id) }]} />
         <Checkbox
-          defaultChecked={item.checked}
+          defaultChecked={item.isDone}
           onChange={(event, checked) => {
             event.preventDefault();
-            setChecked(item.id, checked);
+            setChecked(item._id, checked);
           }}
         />
       </Box>

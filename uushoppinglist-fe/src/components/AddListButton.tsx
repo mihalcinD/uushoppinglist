@@ -113,12 +113,17 @@ const AddListButton = () => {
             variant={'contained'}
             onClick={() => {
               if (name && name !== '')
-                addList(name).then(() => {
-                  setName('');
-                  setMembers([{ id: (user as User).sub ?? '', name: (user as User).name ?? '' }]);
-                  setItems([]);
-                  setIsVisible(false);
-                });
+                addList(name)
+                  .then(() => {
+                    setName('');
+                    setMembers([{ id: (user as User).sub ?? '', name: (user as User).name ?? '' }]);
+                    setItems([]);
+                    setIsVisible(false);
+                  })
+                  .catch(err => {
+                    console.log(err);
+                    setError(true);
+                  });
               else setError(true);
             }}
             color={'primary'}>

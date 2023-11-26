@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Unstable_Grid2';
 import ListTile from './ListTile.tsx';
 import { List } from '../types/List.ts';
-import { Skeleton } from '@mui/material';
+import { Skeleton, Typography } from '@mui/material';
 
 type Props = {
   lists: List[] | undefined;
@@ -18,13 +18,16 @@ const ListsGrid = ({ lists, isLoading }: Props) => {
             </Grid>
           ))}
         </>
-      ) : (
-        lists &&
+      ) : lists ? (
         lists.map((list, index) => {
           return (
             <ListTile key={index} isArchived={list.isArchived} isOwner={list.isOwner} name={list.name} id={list.id} />
           );
         })
+      ) : (
+        <Typography variant={'h3'} component={'h3'}>
+          No lists available
+        </Typography>
       )}
     </Grid>
   );

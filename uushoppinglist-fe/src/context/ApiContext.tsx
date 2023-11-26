@@ -19,7 +19,7 @@ export const useApiContext = () => {
 export const ApiContext = createContext<ApiContextType>(undefined!);
 
 export const ApiProvider = ({ children }: Props) => {
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const BASE_URL = config.useMock ? config.mockDomain : config.domain;
 
   const axiosConfig: AxiosRequestConfig = {
@@ -37,9 +37,11 @@ export const ApiProvider = ({ children }: Props) => {
 
   useEffect(() => {
     axiosInstance.interceptors.request.use(async config => {
-      const token = await getAccessTokenSilently();
-      if (token) {
-        config.headers.Authorization = 'Bearer ' + token;
+      if (!isAuthenticated) {
+        const token = await getAccessTokenSilently();
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
       }
       config.baseURL = BASE_URL;
       return config;

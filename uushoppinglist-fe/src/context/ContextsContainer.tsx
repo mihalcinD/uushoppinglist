@@ -21,6 +21,7 @@ const ContextsContainer = ({ children }: Props) => {
         clientId="sg6O1UtekVdCSt56cD0DB7VRYTqxGhc8"
         authorizationParams={{
           redirect_uri: window.location.origin,
+          audience: 'www.uushoppinglist.com',
         }}>
         <ApiProvider>
           <ListsProvider>
