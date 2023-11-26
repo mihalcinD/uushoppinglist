@@ -1,3 +1,5 @@
 export const config = {
-  domain: 'https://www.mapotic.com',
+  domain: 'http://localhost:3000/',
+  mockDomain: 'https://localhost:3001/',
+  useMock: false,
 };

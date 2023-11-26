@@ -1,144 +1,126 @@
 import { useEffect, useState } from 'react';
-import { ListDetail } from '../types/List.ts';
+import { List, UpdateListPayload } from '../types/List.ts';
+import useGet from './api/crud/useGet.ts';
+import { ApiUrl } from './api/api.const.ts';
+import usePost from './api/crud/usePost.ts';
+import { AddItemPayload, UpdateItemPayload } from '../types/Item.ts';
+import usePatch from './api/crud/usePatch.ts';
+import useDelete from './api/crud/useDelete.ts';
 
-const mockList: ListDetail = {
-  id: 'xx',
-  owner: { id: 'xx', name: 'David' },
-  members: [
-    { id: 'xx', name: 'Jakub' },
-    { id: 'yy', name: 'Vlada' },
-  ],
-  name: 'Shopping List 1',
-  archived: false,
-  items: [
-    {
-      id: 'xx',
-      name: 'Milk',
-      checked: false,
-    },
-    {
-      id: 'yy',
-      name: 'Bread',
-      checked: true,
-    },
-  ],
-  isOwner: true,
-};
 type Props = {
   id: string | undefined;
 };
 const UseList = ({ id }: Props) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [list, setList] = useState<ListDetail | undefined>(mockList);
-
-  //method to add item to list just for testing purposes, will be replaced with api call
-  const addItem = () => {
-    setList(prevState => {
-      if (prevState)
-        return {
-          ...prevState,
-          items: [...prevState.items, { id: 'zz' + Math.random() * 100, name: 'New Item', checked: false }],
-        };
-    });
-  };
-
-  //method to remove item from list just for testing purposes, will be replaced with api call
-  const removeItem = (id: string) => {
-    setList(prevState => {
-      if (prevState) return { ...prevState, items: prevState.items.filter(item => item.id !== id) };
-    });
-  };
-
-  //method to set check item from list just for testing purposes, will be replaced with api call
-  const setCheckItem = (id: string, checked: boolean) => {
-    setList(prevState => {
-      if (prevState)
-        return {
-          ...prevState,
-          items: prevState.items.map(item => {
-            if (item.id === id) {
-              return { ...item, checked: checked };
-            }
-            return item;
-          }),
-        };
-    });
-  };
-
-  //method to remove member from list just for testing purposes, will be replaced with api call
-  const removeMember = (id: string) => {
-    setList(prevState => {
-      if (prevState) return { ...prevState, members: prevState.members.filter(member => member.id !== id) };
-    });
-  };
-
-  //method to set name of list just for testing purposes, will be replaced with api call
-  const setName = (name: string) => {
-    setList(prevState => {
-      if (prevState) return { ...prevState, name: name };
-    });
-  };
-
-  //method to get unChecked items from list just for testing purposes, will be replaced with api call
-  const getUnCheckedItems = () => {
-    setList(prevState => {
-      if (prevState)
-        return {
-          ...prevState,
-          items: prevState.items.filter(item => !item.checked),
-        };
-    });
-  };
-
-  //method to get all items from list just for testing purposes, will be replaced with api call
-  const getAllItems = () => {
-    setList(prevState => {
-      if (prevState)
-        return {
-          ...prevState,
-          items: mockList.items,
-        };
-    });
-  };
-  //method to set item name from list just for testing purposes, will be replaced with api call
-  const setItemName = (name: string, id: string) => {
-    setList(prevState => {
-      if (prevState)
-        return {
-          ...prevState,
-          items: prevState.items.map(item => {
-            if (item.id === id) {
-              return { ...item, name: name };
-            }
-            return item;
-          }),
-        };
-    });
-  };
+  const { data: list, refetch, isLoading } = useGet<List>({ url: ApiUrl([id]).list });
+  const [localList, setLocalList] = useState<List | undefined>();
+  const { post: postItem } = usePost<AddItemPayload, List>({ url: ApiUrl([id]).addItems });
+  const [filter, setFilter] = useState<'all' | 'notDone'>('all');
+  const { patch: patchItem } = usePatch<UpdateItemPayload, List>({ url: ApiUrl([id]).updateItem });
+  const { patch: patchList } = usePatch<UpdateListPayload, List>({ url: ApiUrl().updateList });
+  const { _delete: deleteItem } = useDelete({ url: ApiUrl([id]).deleteItem });
 
   useEffect(() => {
-    if (id) {
-      setName(mockList.name + ' (ID: #' + id + ')');
-      //refetch
+    if (list) {
+      switch (filter) {
+        case 'notDone':
+          getUnCheckedItems();
+          break;
+        default:
+          getAllItems();
+      }
+      setLocalList(list);
     }
+  }, [list, filter]);
 
-    //fake api call delay
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+  useEffect(() => {
+    refetch();
   }, [id]);
 
+  const addItem = () => {
+    return new Promise<void>((resolve, reject) => {
+      postItem({ name: 'New Item' })
+        .then(() => {
+          refetch();
+          resolve();
+        })
+        .catch(() => {
+          reject();
+        });
+    });
+  };
+
+  const removeItem = (itemId: string) => {
+    return new Promise<void>((resolve, reject) => {
+      deleteItem(ApiUrl([id, itemId]).deleteItem)
+        .then(() => {
+          refetch();
+          resolve();
+        })
+        .catch(() => {
+          reject();
+        });
+    });
+  };
+
+  const setName = (name: string) => {
+    return new Promise<void>((resolve, reject) => {
+      patchList({ name })
+        .then(() => {
+          refetch();
+          resolve();
+        })
+        .catch(() => {
+          reject();
+        });
+    });
+  };
+
+  const getUnCheckedItems = () => {
+    setLocalList(prevState => {
+      if (prevState)
+        return {
+          ...prevState,
+          items: prevState.items.filter(item => !item.isDone),
+        };
+    });
+  };
+
+  const getAllItems = () => {
+    setLocalList(prevState => {
+      if (prevState && list)
+        return {
+          ...prevState,
+          items: list.items,
+        };
+    });
+  };
+
+  const setItemName = (name: string, itemID: string) => {
+    return new Promise<void>((resolve, reject) => {
+      patchItem({ name }, ApiUrl([id, itemID]).updateItem)
+        .then(() => {
+          refetch();
+          resolve();
+        })
+        .catch(() => {
+          {
+            reject();
+          }
+        });
+    });
+  };
+
   return {
-    list,
+    list: localList,
     isLoading,
     addItem,
     removeItem,
-    setCheckItem,
-    removeMember,
     setName,
     getAllItems,
     getUnCheckedItems,
     setItemName,
+    setFilter,
+    filter,
   };
 };
 

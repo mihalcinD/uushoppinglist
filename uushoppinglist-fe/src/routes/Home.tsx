@@ -6,7 +6,7 @@ import ListsGrid from '../components/ListsGrid.tsx';
 import { useListsContext } from '../context/ListsContext.tsx';
 
 const Home = () => {
-  const { isLoading, lists, getSharedLists, getMyLists, getArchivedLists, getAllLists } = useListsContext();
+  const { isLoading, lists, setFilter } = useListsContext();
   return (
     <ContentWrapper>
       <Typography variant="h2" component={'h1'} sx={{ fontWeight: '600', textAlign: 'left' }}>
@@ -28,28 +28,28 @@ const Home = () => {
               label: 'All',
               value: 'all',
               onSelect: () => {
-                getAllLists();
+                setFilter('all');
               },
             },
             {
               label: 'Owner',
               value: 'owner',
               onSelect: () => {
-                getMyLists();
+                setFilter('owner');
               },
             },
             {
               label: 'Member',
               value: 'member',
               onSelect: () => {
-                getSharedLists();
+                setFilter('member');
               },
             },
             {
               label: 'Archived',
               value: 'archived',
               onSelect: () => {
-                getArchivedLists();
+                setFilter('archived');
               },
             },
           ]}

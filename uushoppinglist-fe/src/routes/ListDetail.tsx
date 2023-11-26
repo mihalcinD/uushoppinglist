@@ -6,21 +6,13 @@ import { Box } from '@mui/material';
 import ItemsList from '../components/ItemsList.tsx';
 import ButtonsGroup from '../components/ButtonsGroup.tsx';
 import { useParams } from 'react-router-dom';
+import { useListsContext } from '../context/ListsContext.tsx';
 
 const ListDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const {
-    list,
-    isLoading,
-    setName,
-    getUnCheckedItems,
-    getAllItems,
-    setCheckItem,
-    addItem,
-    removeItem,
-    removeMember,
-    setItemName,
-  } = useList({ id });
+  const { list, isLoading, setName, addItem, removeItem, removeMember, setItemName, setFilter } = useList({ id });
+  const { setArchived } = useListsContext();
+
   return (
     <ContentWrapper>
       <ListName name={list?.name} isOwner={list?.isOwner} id={list?.id} isLoading={isLoading} setName={setName} />
@@ -32,23 +24,23 @@ const ListDetail = () => {
               label: 'All',
               value: 'all',
               onSelect: () => {
-                getAllItems();
+                setFilter('all');
               },
             },
             {
               label: 'To buy',
               value: 'to-buy',
               onSelect: () => {
-                getUnCheckedItems();
+                setFilter('notDone');
               },
             },
           ]}
         />
-        <ButtonsGroup isLoading={isLoading} addItem={addItem} members={list?.members} onUserDelete={removeMember} />
+        <ButtonsGroup isLoading={isLoading} addItem={addItem} members={list?.membersIDs} onUserDelete={removeMember} />
       </Box>
       <ItemsList
         items={list?.items}
-        setChecked={setCheckItem}
+        setChecked={setArchived}
         isLoading={isLoading}
         deleteItem={removeItem}
         setItemName={setItemName}

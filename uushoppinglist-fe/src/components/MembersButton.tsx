@@ -34,7 +34,7 @@ const MembersButton = ({ isLoading, members, onDeleteUser }: Props) => {
             members.map((member, index) => (
               <Chip
                 icon={<AccountCircleIcon />}
-                label={member.name}
+                label={member.id}
                 key={index}
                 onDelete={() => {
                   onDeleteUser(member.id);
