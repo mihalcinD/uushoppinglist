@@ -1,19 +1,31 @@
-export type ListDetail = {
-  id: string;
-  owner: User;
-  members: User[];
+export type List = {
+  _id: string;
+  ownerID: User;
+  membersIDs: User[];
   name: string;
-  archived: boolean;
+  isArchived: boolean;
   items: ListItem[];
   isOwner: boolean;
+  createdAt: string;
+  updatedAt: string;
 };
 
-export type ListItem = { id: string; name: string; checked: boolean };
+export type ListItem = { _id: string; name: string; isDone: boolean };
 export type User = { id: string; name: string };
 
-export type List = {
-  id: string;
+export type ListsResponse = {
+  success: boolean;
+  result: List[];
+  errors: any;
+};
+
+export type AddListPayload = {
   name: string;
-  isOwner: boolean;
-  isArchived: boolean;
+  membersIDs?: string[];
+  items?: { name: string; isDone?: boolean }[];
+};
+
+export type UpdateListPayload = {
+  name?: string;
+  isArchived?: boolean;
 };
