@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { List } from '../types/List.ts';
+import { List, UpdateListPayload } from '../types/List.ts';
 import useGet from './api/crud/useGet.ts';
 import { ApiUrl } from './api/api.const.ts';
 import usePost from './api/crud/usePost.ts';
-import { AddItemPayload } from '../types/Item.ts';
+import { AddItemPayload, UpdateItemPayload } from '../types/Item.ts';
+import usePatch from './api/crud/usePatch.ts';
+import useDelete from './api/crud/useDelete.ts';
 
 type Props = {
   id: string | undefined;
@@ -13,6 +15,9 @@ const UseList = ({ id }: Props) => {
   const [localList, setLocalList] = useState<List | undefined>();
   const { post: postItem } = usePost<AddItemPayload, List>({ url: ApiUrl([id]).addItems });
   const [filter, setFilter] = useState<'all' | 'notDone'>('all');
+  const { patch: patchItem } = usePatch<UpdateItemPayload, List>({ url: ApiUrl([id]).updateItem });
+  const { patch: patchList } = usePatch<UpdateListPayload, List>({ url: ApiUrl().updateList });
+  const { _delete: deleteItem } = useDelete({ url: ApiUrl([id]).deleteItem });
 
   useEffect(() => {
     if (list) {
@@ -44,24 +49,29 @@ const UseList = ({ id }: Props) => {
     });
   };
 
-  //method to remove item from list just for testing purposes, will be replaced with api call
-  const removeItem = (id: string) => {
-    setList(prevState => {
-      if (prevState) return { ...prevState, items: prevState.items.filter(item => item.id !== id) };
+  const removeItem = (itemId: string) => {
+    return new Promise<void>((resolve, reject) => {
+      deleteItem(ApiUrl([id, itemId]).deleteItem)
+        .then(() => {
+          refetch();
+          resolve();
+        })
+        .catch(() => {
+          reject();
+        });
     });
   };
 
-  //method to remove member from list just for testing purposes, will be replaced with api call
-  const removeMember = (id: string) => {
-    setList(prevState => {
-      if (prevState) return { ...prevState, members: prevState.members.filter(member => member.id !== id) };
-    });
-  };
-
-  //method to set name of list just for testing purposes, will be replaced with api call
   const setName = (name: string) => {
-    setList(prevState => {
-      if (prevState) return { ...prevState, name: name };
+    return new Promise<void>((resolve, reject) => {
+      patchList({ name })
+        .then(() => {
+          refetch();
+          resolve();
+        })
+        .catch(() => {
+          reject();
+        });
     });
   };
 
@@ -84,19 +94,19 @@ const UseList = ({ id }: Props) => {
         };
     });
   };
-  //method to set item name from list just for testing purposes, will be replaced with api call
-  const setItemName = (name: string, id: string) => {
-    setList(prevState => {
-      if (prevState)
-        return {
-          ...prevState,
-          items: prevState.items.map(item => {
-            if (item.id === id) {
-              return { ...item, name: name };
-            }
-            return item;
-          }),
-        };
+
+  const setItemName = (name: string, itemID: string) => {
+    return new Promise<void>((resolve, reject) => {
+      patchItem({ name }, ApiUrl([id, itemID]).updateItem)
+        .then(() => {
+          refetch();
+          resolve();
+        })
+        .catch(() => {
+          {
+            reject();
+          }
+        });
     });
   };
 
@@ -105,7 +115,6 @@ const UseList = ({ id }: Props) => {
     isLoading,
     addItem,
     removeItem,
-    removeMember,
     setName,
     getAllItems,
     getUnCheckedItems,
