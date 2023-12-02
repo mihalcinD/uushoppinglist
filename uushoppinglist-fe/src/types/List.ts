@@ -25,7 +25,19 @@ export type AddListPayload = {
   items?: { name: string; isDone?: boolean }[];
 };
 
+export type AddListResponse = {
+  success: boolean;
+  errors: null | object;
+  result: List;
+};
+
 export type UpdateListPayload = {
   name?: string;
   isArchived?: boolean;
+};
+
+export type UpdateListResponse = {
+  success: boolean;
+  errors: null | object;
+  result: List;
 };

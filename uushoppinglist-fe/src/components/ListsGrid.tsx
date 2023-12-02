@@ -21,7 +21,7 @@ const ListsGrid = ({ lists, isLoading }: Props) => {
       ) : lists ? (
         lists.map((list, index) => {
           return (
-            <ListTile key={index} isArchived={list.isArchived} isOwner={list.isOwner} name={list.name} id={list.id} />
+            <ListTile key={index} isArchived={list.isArchived} isOwner={list.isOwner} name={list.name} id={list._id} />
           );
         })
       ) : (
