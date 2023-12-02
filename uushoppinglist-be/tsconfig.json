@@ -110,8 +110,5 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*", "./types/*"]
-    }/* Skip type checking all .d.ts files. */
   }
 }
