@@ -10,3 +10,4 @@ const validate = (schema, data) => {
     }
 };
 exports.validate = validate;
+//# sourceMappingURL=validator.js.map

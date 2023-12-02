@@ -18,3 +18,4 @@ const addSchema = {
 exports.membersSchema = {
     addSchema: ajv.compile(addSchema),
 };
+//# sourceMappingURL=members.schema.js.map

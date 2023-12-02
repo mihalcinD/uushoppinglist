@@ -10,3 +10,4 @@ var items_route_1 = require("./items.route");
 Object.defineProperty(exports, "itemsRoute", { enumerable: true, get: function () { return __importDefault(items_route_1).default; } });
 var members_route_1 = require("./members.route");
 Object.defineProperty(exports, "membersRoute", { enumerable: true, get: function () { return __importDefault(members_route_1).default; } });
+//# sourceMappingURL=index.js.map

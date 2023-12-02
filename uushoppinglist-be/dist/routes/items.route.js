@@ -9,3 +9,4 @@ router.post('/', (0, authorization_1.restrict)([profiles_1.Profiles.OWNER, profi
 router.patch('/:id', (0, authorization_1.restrict)([profiles_1.Profiles.OWNER, profiles_1.Profiles.MEMBER]), items_controller_1.patchItem);
 router.delete('/:id', (0, authorization_1.restrict)([profiles_1.Profiles.OWNER, profiles_1.Profiles.MEMBER]), items_controller_1.deleteItem);
 exports.default = router;
+//# sourceMappingURL=items.route.js.map

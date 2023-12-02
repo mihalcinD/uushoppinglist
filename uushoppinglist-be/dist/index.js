@@ -40,3 +40,4 @@ app.listen(PORT, () => {
     console.log('Server running on port  ' + PORT);
 });
 exports.default = app;
+//# sourceMappingURL=index.js.map

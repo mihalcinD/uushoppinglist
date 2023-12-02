@@ -51,3 +51,4 @@ const deleteMember = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.deleteMember = deleteMember;
+//# sourceMappingURL=members.controller.js.map
