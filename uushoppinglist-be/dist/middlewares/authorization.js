@@ -26,3 +26,4 @@ const restrict = (profiles) => {
     });
 };
 exports.restrict = restrict;
+//# sourceMappingURL=authorization.js.map

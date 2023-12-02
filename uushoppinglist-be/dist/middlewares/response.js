@@ -13,3 +13,4 @@ const ResponseHandler = (result, req, res, next) => {
     });
 };
 exports.default = ResponseHandler;
+//# sourceMappingURL=response.js.map

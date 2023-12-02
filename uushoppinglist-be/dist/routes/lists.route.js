@@ -11,3 +11,4 @@ router.post('/', lists_controller_1.createList);
 router.patch('/:listID', (0, authorization_1.restrict)([profiles_1.Profiles.OWNER]), lists_controller_1.patchList);
 router.delete('/:listID', (0, authorization_1.restrict)([profiles_1.Profiles.OWNER]), lists_controller_1.deleteList);
 exports.default = router;
+//# sourceMappingURL=lists.route.js.map

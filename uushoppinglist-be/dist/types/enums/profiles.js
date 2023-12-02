@@ -6,3 +6,4 @@ var Profiles;
     Profiles["OWNER"] = "OWNER";
     Profiles["MEMBER"] = "MEMBER";
 })(Profiles || (exports.Profiles = Profiles = {}));
+//# sourceMappingURL=profiles.js.map

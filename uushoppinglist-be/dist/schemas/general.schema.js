@@ -20,3 +20,4 @@ exports.generalSchema = {
     identifierSchema: ajv.compile(exports.identifierSchema),
     userIdentifierSchema: ajv.compile(exports.userIdentifierSchema),
 };
+//# sourceMappingURL=general.schema.js.map

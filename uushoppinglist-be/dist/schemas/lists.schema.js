@@ -52,3 +52,4 @@ exports.listsSchema = {
     updateSchema: ajv.compile(updateSchema),
     identifierSchema: ajv.compile(general_schema_1.identifierSchema),
 };
+//# sourceMappingURL=lists.schema.js.map

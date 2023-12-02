@@ -8,3 +8,4 @@ const router = (0, express_1.Router)({ mergeParams: true });
 router.post('/', (0, authorization_1.restrict)([profiles_1.Profiles.OWNER]), members_controller_1.addMember);
 router.delete('/:id', (0, authorization_1.restrict)([profiles_1.Profiles.OWNER]), members_controller_1.deleteMember);
 exports.default = router;
+//# sourceMappingURL=members.route.js.map

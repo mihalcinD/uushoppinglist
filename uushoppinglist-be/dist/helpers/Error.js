@@ -9,3 +9,4 @@ const CreateError = (reason, statusCode) => {
     return error;
 };
 exports.CreateError = CreateError;
+//# sourceMappingURL=Error.js.map

@@ -35,3 +35,4 @@ exports.itemsSchema = {
     createSchema: ajv.compile(createSchema),
     updateSchema: ajv.compile(updateSchema),
 };
+//# sourceMappingURL=items.schema.js.map
