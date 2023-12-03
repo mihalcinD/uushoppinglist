@@ -3,6 +3,7 @@ import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import ModalBox from './Modal.tsx';
 import { useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useAuth0 } from '@auth0/auth0-react';
 
 type Props = {
   isLoading: boolean;
@@ -12,6 +13,7 @@ type Props = {
 };
 const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd }: Props) => {
   const [open, setOpen] = useState(false);
+  const { user } = useAuth0();
   const handleClose = () => setOpen(false);
   return (
     <>
@@ -45,9 +47,13 @@ const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd }: Props)
                 icon={<AccountCircleIcon />}
                 label={member}
                 key={index}
-                onDelete={() => {
-                  onDeleteUser(member);
-                }}
+                onDelete={
+                  member !== user?.sub
+                    ? () => {
+                        onDeleteUser(member);
+                      }
+                    : undefined
+                }
               />
             ))}
         </Box>

@@ -12,9 +12,7 @@ const AddListButton = () => {
   const [name, setName] = useState<string>();
   const [items, setItems] = useState<{ name: string }[]>();
   const { user } = useAuth0();
-  const [members, setMembers] = useState<{ id: string; name: string }[] | undefined>([
-    { id: (user as User).sub ?? '', name: (user as User).name ?? '' },
-  ]);
+  const [members, setMembers] = useState<{ id: string; name: string }[] | undefined>([]);
   const [error, setError] = useState<boolean>(false);
   const { addList } = useListsContext();
   return (
