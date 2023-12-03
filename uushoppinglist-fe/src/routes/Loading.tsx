@@ -1,6 +1,8 @@
 import { Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const Loading = () => {
+  const { t } = useTranslation();
   return (
     <Box
       display={'flex'}
@@ -10,7 +12,7 @@ const Loading = () => {
       height={'100vh'}
       sx={{ backgroundColor: 'background.default' }}>
       <Typography variant="h3" component={'h1'}>
-        Authentication in progress...
+        {t('loading.title')}
       </Typography>
     </Box>
   );

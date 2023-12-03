@@ -6,6 +6,7 @@ import { Box } from '@mui/material';
 import ItemsList from '../components/ItemsList.tsx';
 import ButtonsGroup from '../components/ButtonsGroup.tsx';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const ListDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,6 +14,7 @@ const ListDetail = () => {
     useList({
       id,
     });
+  const { t } = useTranslation();
 
   return (
     <ContentWrapper>
@@ -22,14 +24,14 @@ const ListDetail = () => {
           isLoading={isLoading}
           actions={[
             {
-              label: 'All',
+              label: t('detail.filter.all'),
               value: 'all',
               onSelect: () => {
                 setFilter('all');
               },
             },
             {
-              label: 'To buy',
+              label: t('detail.filter.to-buy'),
               value: 'to-buy',
               onSelect: () => {
                 setFilter('notDone');

@@ -6,6 +6,7 @@ import { useListsContext } from '../context/ListsContext.tsx';
 import { useAuth0, User } from '@auth0/auth0-react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from 'react-i18next';
 
 const AddListButton = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -15,15 +16,16 @@ const AddListButton = () => {
   const [members, setMembers] = useState<{ id: string; name: string }[] | undefined>([]);
   const [error, setError] = useState<boolean>(false);
   const { addList } = useListsContext();
+  const { t } = useTranslation();
   return (
     <>
       <Fab color="primary" aria-label="add" sx={{ alignSelf: 'flex-end' }} onClick={() => setIsVisible(true)}>
         <AddIcon />
       </Fab>
-      <ModalBox open={isVisible} handleClose={() => setIsVisible(false)} title={'Create new list'}>
+      <ModalBox open={isVisible} handleClose={() => setIsVisible(false)} title={t('home.add-modal.title')}>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} mt={5}>
           <TextField
-            label="Name"
+            label={t('home.add-modal.name-placeholder')}
             value={name}
             error={error}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +42,7 @@ const AddListButton = () => {
               });
             }}
             color={'primary'}>
-            Add Item
+            {t('home.add-modal.item-button')}
           </Button>
         </Box>
 
@@ -99,7 +101,7 @@ const AddListButton = () => {
               });
             }}
             color={'primary'}>
-            Add member
+            {t('home.add-modal.member-button')}
           </Button>
         </Box>
         <Box display={'flex'} flexDirection={'row'} gap={2} flexWrap={'wrap'} mt={4}>
@@ -138,7 +140,7 @@ const AddListButton = () => {
               else setError(true);
             }}
             color={'primary'}>
-            Save
+            {t('home.add-modal.save-button')}
           </Button>
         </Box>
       </ModalBox>

@@ -1,16 +1,12 @@
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import TranslateIcon from '@mui/icons-material/Translate';
 import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { MouseEvent, useState } from 'react';
+import { useTranslateContext } from '../context/TranslateContext.tsx';
 
-type Props = {
-  actions: { name: string; action: () => void }[];
-};
-const MoreButton = ({ actions }: Props) => {
+const LanguageButton = () => {
   const [anchorMenu, setMenu] = useState<HTMLElement>();
+  const { locales, setLanguageAndSave, language } = useTranslateContext();
   const handleOpenMenu = (event: MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    event.preventDefault();
-    console.log('Button clicked');
     setMenu(event.currentTarget);
   };
   const handleCloseMenu = () => {
@@ -18,12 +14,8 @@ const MoreButton = ({ actions }: Props) => {
   };
   return (
     <>
-      <IconButton
-        onMouseDown={event => event.stopPropagation()}
-        aria-label="more"
-        size="medium"
-        onClick={handleOpenMenu}>
-        <MoreVertIcon fontSize="inherit" />
+      <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+        <TranslateIcon />
       </IconButton>
       <Menu
         sx={{ mt: '45px' }}
@@ -31,23 +23,24 @@ const MoreButton = ({ actions }: Props) => {
         anchorEl={anchorMenu}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'right',
+          horizontal: 'left',
         }}
         keepMounted
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right',
+          horizontal: 'left',
         }}
-        open={Boolean(anchorMenu)}
-        onClose={handleCloseMenu}>
-        {actions.map((action, index) => (
+        onClose={handleCloseMenu}
+        open={Boolean(anchorMenu)}>
+        {locales.map((locale, index) => (
           <MenuItem
             key={index}
+            selected={language === locale.code}
             onClick={() => {
+              setLanguageAndSave(locale.code);
               handleCloseMenu();
-              action.action();
             }}>
-            <Typography textAlign="center">{action.name}</Typography>
+            <Typography textAlign="center">{locale.name}</Typography>
           </MenuItem>
         ))}
       </Menu>
@@ -55,4 +48,4 @@ const MoreButton = ({ actions }: Props) => {
   );
 };
 
-export default MoreButton;
+export default LanguageButton;
