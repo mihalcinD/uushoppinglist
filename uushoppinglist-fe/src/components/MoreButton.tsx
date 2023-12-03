@@ -41,7 +41,12 @@ const MoreButton = ({ deleteItem, actions }: Props) => {
         open={Boolean(anchorMenu)}
         onClose={handleCloseMenu}>
         {actions.map((action, index) => (
-          <MenuItem key={index} onClick={action.action}>
+          <MenuItem
+            key={index}
+            onClick={() => {
+              handleCloseMenu();
+              action.action();
+            }}>
             <Typography textAlign="center">{action.name}</Typography>
           </MenuItem>
         ))}

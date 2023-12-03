@@ -1,10 +1,10 @@
 import { ListItem as ListItemType } from '../types/List.ts';
-import { Box, Skeleton } from '@mui/material';
+import { Box, Skeleton, Typography } from '@mui/material';
 import ListItem from './ListItem.tsx';
 
 type Props = {
   items?: ListItemType[];
-  setChecked: (id: string, checked: boolean) => void;
+  setChecked: (itemID: string, checked: boolean) => void;
   deleteItem: (id: string) => void;
   isLoading: boolean;
   setItemName: (name: string, id: string) => void;
@@ -20,7 +20,7 @@ const ItemsList = ({ items, setChecked, isLoading, deleteItem, setItemName }: Pr
         </>
       ) : (
         <>
-          {items &&
+          {items && items.length > 0 ? (
             items.map((item, index) => (
               <ListItem
                 item={item}
@@ -29,7 +29,12 @@ const ItemsList = ({ items, setChecked, isLoading, deleteItem, setItemName }: Pr
                 deleteItem={deleteItem}
                 setItemName={setItemName}
               />
-            ))}
+            ))
+          ) : (
+            <Typography variant={'h3'} component={'h3'}>
+              No items yet :(
+            </Typography>
+          )}
         </>
       )}
     </Box>

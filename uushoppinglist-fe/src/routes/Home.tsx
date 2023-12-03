@@ -4,9 +4,16 @@ import SegmentedButtons from '../components/SegmentedButtons.tsx';
 import AddListButton from '../components/AddListButton.tsx';
 import ListsGrid from '../components/ListsGrid.tsx';
 import { useListsContext } from '../context/ListsContext.tsx';
+import { useEffect } from 'react';
+import useGet from '../hooks/api/crud/useGet.ts';
+import { ApiUrl } from '../hooks/api/api.const.ts';
 
 const Home = () => {
   const { isLoading, lists, setFilter } = useListsContext();
+  const { refetch } = useGet({ url: ApiUrl().addList });
+
+  useEffect(() => {}, []);
+
   return (
     <ContentWrapper>
       <Typography variant="h2" component={'h1'} sx={{ fontWeight: '600', textAlign: 'left' }}>

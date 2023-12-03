@@ -1,7 +1,7 @@
 export type List = {
   _id: string;
-  ownerID: User;
-  membersIDs: User[];
+  ownerID: string;
+  membersIDs: string[];
   name: string;
   isArchived: boolean;
   items: ListItem[];
@@ -12,6 +12,12 @@ export type List = {
 
 export type ListItem = { _id: string; name: string; isDone: boolean };
 export type User = { id: string; name: string };
+
+export type ListResponse = {
+  success: boolean;
+  result: List;
+  errors: any;
+};
 
 export type ListsResponse = {
   success: boolean;
@@ -25,7 +31,19 @@ export type AddListPayload = {
   items?: { name: string; isDone?: boolean }[];
 };
 
+export type AddListResponse = {
+  success: boolean;
+  errors: null | object;
+  result: List;
+};
+
 export type UpdateListPayload = {
   name?: string;
   isArchived?: boolean;
+};
+
+export type UpdateListResponse = {
+  success: boolean;
+  errors: null | object;
+  result: List;
 };

@@ -6,16 +6,17 @@ import { Box } from '@mui/material';
 import ItemsList from '../components/ItemsList.tsx';
 import ButtonsGroup from '../components/ButtonsGroup.tsx';
 import { useParams } from 'react-router-dom';
-import { useListsContext } from '../context/ListsContext.tsx';
 
 const ListDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { list, isLoading, setName, addItem, removeItem, removeMember, setItemName, setFilter } = useList({ id });
-  const { setArchived } = useListsContext();
+  const { list, isLoading, setName, addItem, removeItem, setItemName, setFilter, setChecked, removeMember, addMember } =
+    useList({
+      id,
+    });
 
   return (
     <ContentWrapper>
-      <ListName name={list?.name} isOwner={list?.isOwner} id={list?.id} isLoading={isLoading} setName={setName} />
+      <ListName name={list?.name} isOwner={list?.isOwner} id={list?._id} isLoading={isLoading} setName={setName} />
       <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'}>
         <SegmentedButtons
           isLoading={isLoading}
@@ -36,11 +37,18 @@ const ListDetail = () => {
             },
           ]}
         />
-        <ButtonsGroup isLoading={isLoading} addItem={addItem} members={list?.membersIDs} onUserDelete={removeMember} />
+        <ButtonsGroup
+          isLoading={isLoading}
+          addItem={addItem}
+          members={list?.membersIDs}
+          onUserDelete={removeMember}
+          onMemberAdd={addMember}
+          ownerID={list?.ownerID}
+        />
       </Box>
       <ItemsList
         items={list?.items}
-        setChecked={setArchived}
+        setChecked={setChecked}
         isLoading={isLoading}
         deleteItem={removeItem}
         setItemName={setItemName}

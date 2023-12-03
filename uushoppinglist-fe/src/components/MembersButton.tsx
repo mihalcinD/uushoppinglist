@@ -1,17 +1,22 @@
-import { IconButton, Skeleton, Box, Button, Stack, Chip } from '@mui/material';
+import { IconButton, Skeleton, Box, Button, Chip } from '@mui/material';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import ModalBox from './Modal.tsx';
 import { useState } from 'react';
-import { User } from '../types/List.ts';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   isLoading: boolean;
-  members?: User[];
+  members?: string[];
   onDeleteUser: (id: string) => void;
+  onMemberAdd: (id: string) => void;
+  ownerID?: string;
 };
-const MembersButton = ({ isLoading, members, onDeleteUser }: Props) => {
+const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd, ownerID }: Props) => {
   const [open, setOpen] = useState(false);
+  const { user } = useAuth0();
+  const navigate = useNavigate();
   const handleClose = () => setOpen(false);
   return (
     <>
@@ -24,26 +29,46 @@ const MembersButton = ({ isLoading, members, onDeleteUser }: Props) => {
       )}
       <ModalBox open={open} handleClose={handleClose} title={'Members'}>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'flex-end'} width={'100%'} mb={2}>
-          <Button variant={'outlined'} onClick={() => {}}>
+          <Button
+            variant={'outlined'}
+            onClick={() => {
+              onMemberAdd(
+                Array(30)
+                  .fill('')
+                  .map(() => Math.random().toString(36).charAt(2))
+                  .join(''),
+              );
+            }}>
             Add Member
           </Button>
         </Box>
 
-        <Stack direction="row" spacing={1}>
+        <Box display={'flex'} flexDirection="row" flexWrap={'wrap'} gap={1}>
           {members &&
             members.map((member, index) => (
               <Chip
                 icon={<AccountCircleIcon />}
-                label={member.id}
+                label={member}
                 key={index}
-                onDelete={() => {
-                  onDeleteUser(member.id);
-                }}
+                onDelete={
+                  member !== user?.sub && user?.sub === ownerID
+                    ? () => {
+                        onDeleteUser(member);
+                      }
+                    : undefined
+                }
               />
             ))}
-        </Stack>
+        </Box>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'} mt={15}>
-          <Button variant={'contained'} onClick={() => {}} color={'error'}>
+          <Button
+            variant={'contained'}
+            onClick={() => {
+              onDeleteUser(user?.sub ?? '');
+              handleClose();
+              navigate('/');
+            }}
+            color={'error'}>
             Leave
           </Button>
           <Button variant={'outlined'} onClick={handleClose}>

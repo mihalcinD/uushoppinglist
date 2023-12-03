@@ -18,10 +18,10 @@ const ListsGrid = ({ lists, isLoading }: Props) => {
             </Grid>
           ))}
         </>
-      ) : lists ? (
+      ) : lists && lists.length > 0 ? (
         lists.map((list, index) => {
           return (
-            <ListTile key={index} isArchived={list.isArchived} isOwner={list.isOwner} name={list.name} id={list.id} />
+            <ListTile key={index} isArchived={list.isArchived} isOwner={list.isOwner} name={list.name} id={list._id} />
           );
         })
       ) : (

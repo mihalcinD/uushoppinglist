@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { CacheAxiosResponse, CacheProperties } from 'axios-cache-interceptor';
 import { ResponseError } from '../../../types/Api.ts';
 import { useApiContext } from '../../../context/ApiContext.tsx';
@@ -14,15 +14,6 @@ const useGet = <T>({ url, params, cache }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<T>();
   const [error, setError] = useState<ResponseError>();
-  const abortController = useRef(new AbortController());
-
-  const handleAbort = useCallback(() => {
-    abortController.current.abort();
-  }, []);
-
-  useEffect(() => {
-    return () => handleAbort();
-  }, []);
 
   const get = (newParams?: Record<string, number>): Promise<T | undefined> => {
     const currentParams = newParams ?? params;
@@ -31,7 +22,7 @@ const useGet = <T>({ url, params, cache }: Props) => {
     setIsLoading(true);
     return new Promise<T | undefined>((resolve, reject) =>
       axios
-        .get(url, { signal: abortController.current.signal, params: currentParams, cache })
+        .get(url, { params: currentParams, cache })
         .then((res: CacheAxiosResponse<T, never>) => {
           setData(res.data);
           setIsLoading(false);
@@ -46,8 +37,8 @@ const useGet = <T>({ url, params, cache }: Props) => {
     );
   };
 
-  const refetch = () => {
-    get();
+  const refetch = async () => {
+    await get();
   };
 
   return { isLoading, data, error, get, refetch, setData };
