@@ -6,7 +6,7 @@ type Props = {
   item: ListItemType;
   setChecked: (id: string, checked: boolean) => void;
   deleteItem: (id: string) => void;
-  setItemName: (name: string, id: string) => void;
+  setItemName: (id: string, name: string) => void;
 };
 const ListItem = ({ item, setChecked, deleteItem, setItemName }: Props) => {
   return (
@@ -23,7 +23,7 @@ const ListItem = ({ item, setChecked, deleteItem, setItemName }: Props) => {
         suppressContentEditableWarning={true}
         contentEditable={true}
         onBlur={e => {
-          setItemName(e.target.innerText || '', item._id);
+          setItemName(item._id, e.target.innerText || '');
         }}>
         {item.name}
       </Typography>

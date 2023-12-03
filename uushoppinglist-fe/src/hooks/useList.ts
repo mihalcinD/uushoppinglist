@@ -6,6 +6,7 @@ import usePost from './api/crud/usePost.ts';
 import { AddItemPayload, UpdateItemPayload } from '../types/Item.ts';
 import usePatch from './api/crud/usePatch.ts';
 import useDelete from './api/crud/useDelete.ts';
+import { AddMemberPayload } from '../types/Member.ts';
 
 type Props = {
   id: string | undefined;
@@ -18,6 +19,8 @@ const UseList = ({ id }: Props) => {
   const { patch: patchItem } = usePatch<UpdateItemPayload, ListResponse>({ url: ApiUrl([id]).updateItem });
   const { patch: patchList } = usePatch<UpdateListPayload, ListResponse>({ url: ApiUrl([id]).updateList });
   const { _delete: deleteItem } = useDelete({ url: ApiUrl([id]).deleteItem });
+  const { _delete: deleteMember } = useDelete({ url: ApiUrl([id]).deleteMember });
+  const { post: postMember } = usePost<AddMemberPayload, ListResponse>({ url: ApiUrl([id]).addMember });
 
   useEffect(() => {
     const getFilteredList = async () => {
@@ -92,17 +95,76 @@ const UseList = ({ id }: Props) => {
     setLocalList(list);
   };
 
-  const setItemName = (name: string, itemID: string) => {
+  const setItemName = (itemID: string, name: string) => {
     return new Promise<void>((resolve, reject) => {
       patchItem({ name }, ApiUrl([id, itemID]).updateItem)
         .then(list => {
-          setLocalList(list.result);
+          setLocalList(prevState => {
+            if (prevState) return { ...list.result, isOwner: prevState.isOwner };
+            return list.result;
+          });
           resolve();
         })
         .catch(() => {
           {
             reject();
           }
+        });
+    });
+  };
+
+  const setChecked = (itemID: string, isDone: boolean) => {
+    return new Promise<void>((resolve, reject) => {
+      setLocalList(prevState => {
+        if (prevState)
+          return {
+            ...prevState,
+            items: prevState.items.map(item => {
+              if (item._id === itemID) return { ...item, isDone };
+              return item;
+            }),
+          };
+      });
+      patchItem({ isDone }, ApiUrl([id, itemID]).updateItem)
+        .then(() => {
+          resolve();
+        })
+        .catch(() => {
+          {
+            reject();
+          }
+        });
+    });
+  };
+
+  const removeMember = (memberID: string) => {
+    return new Promise<void>((resolve, reject) => {
+      deleteMember(ApiUrl([id, memberID]).deleteMember)
+        .then(() => {
+          setLocalList(prevState => {
+            if (prevState)
+              return {
+                ...prevState,
+                membersIDs: prevState.membersIDs.filter(member => member !== memberID),
+              };
+          });
+          resolve();
+        })
+        .catch(() => {
+          reject();
+        });
+    });
+  };
+
+  const addMember = (memberID: string) => {
+    return new Promise<void>((resolve, reject) => {
+      postMember({ memberID })
+        .then(list => {
+          setLocalList(list.result);
+          resolve();
+        })
+        .catch(() => {
+          reject();
         });
     });
   };
@@ -118,6 +180,9 @@ const UseList = ({ id }: Props) => {
     setItemName,
     setFilter,
     filter,
+    setChecked,
+    removeMember,
+    addMember,
   };
 };
 

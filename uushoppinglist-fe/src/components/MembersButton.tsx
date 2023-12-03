@@ -1,4 +1,4 @@
-import { IconButton, Skeleton, Box, Button, Stack, Chip } from '@mui/material';
+import { IconButton, Skeleton, Box, Button, Chip } from '@mui/material';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import ModalBox from './Modal.tsx';
 import { useState } from 'react';
@@ -8,8 +8,9 @@ type Props = {
   isLoading: boolean;
   members?: string[];
   onDeleteUser: (id: string) => void;
+  onMemberAdd: (id: string) => void;
 };
-const MembersButton = ({ isLoading, members, onDeleteUser }: Props) => {
+const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd }: Props) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   return (
@@ -23,12 +24,21 @@ const MembersButton = ({ isLoading, members, onDeleteUser }: Props) => {
       )}
       <ModalBox open={open} handleClose={handleClose} title={'Members'}>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'flex-end'} width={'100%'} mb={2}>
-          <Button variant={'outlined'} onClick={() => {}}>
+          <Button
+            variant={'outlined'}
+            onClick={() => {
+              onMemberAdd(
+                Array(30)
+                  .fill('')
+                  .map(() => Math.random().toString(36).charAt(2))
+                  .join(''),
+              );
+            }}>
             Add Member
           </Button>
         </Box>
 
-        <Stack direction="row" spacing={1}>
+        <Box display={'flex'} flexDirection="row" flexWrap={'wrap'} gap={1}>
           {members &&
             members.map((member, index) => (
               <Chip
@@ -40,7 +50,7 @@ const MembersButton = ({ isLoading, members, onDeleteUser }: Props) => {
                 }}
               />
             ))}
-        </Stack>
+        </Box>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'} mt={15}>
           <Button variant={'contained'} onClick={() => {}} color={'error'}>
             Leave
