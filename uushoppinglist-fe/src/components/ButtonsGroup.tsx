@@ -1,12 +1,11 @@
 import { Box, Fab, Skeleton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import MembersButton from './MembersButton.tsx';
-import { User } from '../types/List.ts';
 
 type Props = {
   isLoading: boolean;
   addItem: () => void;
-  members?: User[];
+  members?: string[];
   onUserDelete: (id: string) => void;
 };
 const ButtonsGroup = ({ isLoading, addItem, members, onUserDelete }: Props) => {

@@ -2,12 +2,11 @@ import { IconButton, Skeleton, Box, Button, Stack, Chip } from '@mui/material';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import ModalBox from './Modal.tsx';
 import { useState } from 'react';
-import { User } from '../types/List.ts';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 type Props = {
   isLoading: boolean;
-  members?: User[];
+  members?: string[];
   onDeleteUser: (id: string) => void;
 };
 const MembersButton = ({ isLoading, members, onDeleteUser }: Props) => {
@@ -34,10 +33,10 @@ const MembersButton = ({ isLoading, members, onDeleteUser }: Props) => {
             members.map((member, index) => (
               <Chip
                 icon={<AccountCircleIcon />}
-                label={member.id}
+                label={member}
                 key={index}
                 onDelete={() => {
-                  onDeleteUser(member.id);
+                  onDeleteUser(member);
                 }}
               />
             ))}

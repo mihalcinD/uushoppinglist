@@ -13,6 +13,12 @@ export type List = {
 export type ListItem = { _id: string; name: string; isDone: boolean };
 export type User = { id: string; name: string };
 
+export type ListResponse = {
+  success: boolean;
+  result: List;
+  errors: any;
+};
+
 export type ListsResponse = {
   success: boolean;
   result: List[];

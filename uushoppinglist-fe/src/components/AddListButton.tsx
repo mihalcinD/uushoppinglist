@@ -50,6 +50,7 @@ const AddListButton = () => {
           {items &&
             items.map((item, index) => (
               <Box
+                key={index}
                 display={'flex'}
                 justifyContent={'space-between'}
                 alignItems={'center'}
@@ -89,7 +90,13 @@ const AddListButton = () => {
                 if (members)
                   return [
                     ...members,
-                    { id: Math.random().toString(), name: 'test' + (members.length + 1) + '@test.com' },
+                    {
+                      id: Array(30)
+                        .fill('')
+                        .map(() => Math.random().toString(36).charAt(2))
+                        .join(''),
+                      name: 'test' + (members.length + 1) + '@test.com',
+                    },
                   ];
               });
             }}
