@@ -10,7 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const AddListButton = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [name, setName] = useState<string>();
-  const [items, setItems] = useState<string[]>();
+  const [items, setItems] = useState<{ name: string }[]>();
   const { user } = useAuth0();
   const [members, setMembers] = useState<{ id: string; name: string }[] | undefined>([
     { id: (user as User).sub ?? '', name: (user as User).name ?? '' },
@@ -37,8 +37,8 @@ const AddListButton = () => {
             variant={'outlined'}
             onClick={() => {
               setItems(items => {
-                if (items) return [...items, 'Item Name'];
-                else return ['Item Name'];
+                if (items) return [...items, { name: 'Item Name' }];
+                else return [{ name: 'Item Name' }];
               });
             }}
             color={'primary'}>
@@ -61,9 +61,15 @@ const AddListButton = () => {
                   suppressContentEditableWarning={true}
                   contentEditable={true}
                   onBlur={e => {
-                    items[index] = e.target.innerText || '';
+                    setItems(prevState => {
+                      if (prevState)
+                        return prevState.map((_item, _index) => {
+                          if (_index === index) return { name: e.target.innerText || '' };
+                          return _item;
+                        });
+                    });
                   }}>
-                  {item}
+                  {item.name}
                 </Typography>
                 <IconButton
                   onClick={() => {
@@ -113,7 +119,7 @@ const AddListButton = () => {
             variant={'contained'}
             onClick={() => {
               if (name && name !== '')
-                addList(name)
+                addList(name, items, members?.map(member => member.id))
                   .then(() => {
                     setName('');
                     setMembers([{ id: (user as User).sub ?? '', name: (user as User).name ?? '' }]);

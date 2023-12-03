@@ -19,7 +19,7 @@ type Props = {
 
 type ListsContextType = {
   lists: List[] | undefined;
-  addList: (name: string) => Promise<void>;
+  addList: (name: string, items?: { name: string }[], membersIDs?: string[]) => Promise<void>;
   isLoading: boolean;
   deleteList: (id: string) => Promise<void>;
   setArchived: (id: string, isArchived: boolean) => Promise<void>;
@@ -35,7 +35,6 @@ export const ListsContext = createContext<ListsContextType>(undefined!);
 
 export const ListsProvider = ({ children }: Props) => {
   const { isLoading, get } = useGet<ListsResponse>({ url: ApiUrl().lists });
-  const [lists, setLists] = useState<ListsResponse>();
   const [localLists, setLocalLists] = useState<List[] | undefined>();
   const { post } = usePost<AddListPayload, AddListResponse>({ url: ApiUrl().addList });
   const { _delete } = useDelete({ url: ApiUrl().deleteList });
@@ -65,11 +64,10 @@ export const ListsProvider = ({ children }: Props) => {
     getFilteredLists();
   }, [filter]);
 
-  const addList = (name: string) => {
+  const addList = (name: string, items?: { name: string }[], membersIDs?: string[]) => {
     return new Promise<void>((resolve, reject) => {
-      post({ name })
+      post({ name, items, membersIDs })
         .then(list => {
-          console.log('ADDED', list);
           setLocalLists(prevState => {
             if (!prevState) return [list.result];
             return [...prevState, list.result];

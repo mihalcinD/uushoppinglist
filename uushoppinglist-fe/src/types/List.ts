@@ -1,7 +1,7 @@
 export type List = {
   _id: string;
-  ownerID: User;
-  membersIDs: User[];
+  ownerID: string;
+  membersIDs: string[];
   name: string;
   isArchived: boolean;
   items: ListItem[];
