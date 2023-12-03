@@ -13,5 +13,14 @@
   "home.add-modal.item-button": "Přidat položku",
   "home.add-modal.member-button": "Přidat člena",
   "home.add-modal.save-button": "Uložit",
-  "home.add-modal.name-placeholder": "Jméno"
+  "home.add-modal.name-placeholder": "Jméno",
+  "detail.filter.all": "Vše",
+  "detail.filter.to-buy": "Koupit",
+  "detail.item.delete": "Smazat",
+  "detail.members.title": "Členové",
+  "detail.members.button.add-member": "Přidat člena",
+  "detail.members.button.close": "Zavřít",
+  "detail.members.button.leave": "Odejít",
+  "header.translations.en": "Angličtina",
+  "header.translations.cs": "Česky"
 }

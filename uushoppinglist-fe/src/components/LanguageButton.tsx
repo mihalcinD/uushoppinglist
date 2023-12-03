@@ -1,9 +1,11 @@
 import TranslateIcon from '@mui/icons-material/Translate';
 import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { MouseEvent, useState } from 'react';
+import { useTranslateContext } from '../context/TranslateContext.tsx';
 
 const LanguageButton = () => {
   const [anchorMenu, setMenu] = useState<HTMLElement>();
+  const { locales, setLanguageAndSave, language } = useTranslateContext();
   const handleOpenMenu = (event: MouseEvent<HTMLElement>) => {
     setMenu(event.currentTarget);
   };
@@ -30,12 +32,17 @@ const LanguageButton = () => {
         }}
         onClose={handleCloseMenu}
         open={Boolean(anchorMenu)}>
-        <MenuItem
-          onClick={() => {
-            handleCloseMenu();
-          }}>
-          <Typography textAlign="center">English</Typography>
-        </MenuItem>
+        {locales.map((locale, index) => (
+          <MenuItem
+            key={index}
+            selected={language === locale.code}
+            onClick={() => {
+              setLanguageAndSave(locale.code);
+              handleCloseMenu();
+            }}>
+            <Typography textAlign="center">{locale.name}</Typography>
+          </MenuItem>
+        ))}
       </Menu>
     </>
   );

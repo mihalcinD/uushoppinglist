@@ -1,14 +1,14 @@
 import { createContext, useContext, useEffect, useMemo, JSX, useState } from 'react';
-
-import { createTheme, responsiveFontSizes, ThemeProvider as MuiThemeProvider, useMediaQuery } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
 type TranslateContextType = {
-  mode: 'light' | 'dark';
-  toggleMode: () => void;
+  locales: { code: string; name: string }[];
+  language: string;
+  setLanguageAndSave: (language: string) => void;
 };
 
 export const useTranslateContext = () => {
@@ -18,37 +18,32 @@ export const useTranslateContext = () => {
 export const TranslateContext = createContext<TranslateContextType>(undefined!);
 
 export const TranslateProvider = ({ children }: Props) => {
-  const [mode, setMode] = useState<'light' | 'dark'>('dark');
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
-  let theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: mode,
-        },
-      }),
-    [mode],
+  const { i18n, t } = useTranslation();
+  const locales = useMemo(
+    () => [
+      { code: 'cs', name: t('header.translations.cs') },
+      { code: 'en', name: t('header.translations.en') },
+    ],
+    [],
   );
-  theme = responsiveFontSizes(theme);
+  const [language, setLanguage] = useState<string>(locales[0].code);
 
   useEffect(() => {
-    const mode = localStorage.getItem('mode');
-    if (mode) {
-      setMode(mode as 'light' | 'dark');
+    const preference = localStorage.getItem('language');
+    if (preference) {
+      setLanguage(preference);
     } else {
-      setMode(prefersDarkMode ? 'dark' : 'light');
+      setLanguage(locales[0].code);
     }
-  }, [prefersDarkMode]);
-  const toggleMode = () => {
-    const _mode = mode === 'light' ? 'dark' : 'light';
-    setMode(_mode);
-    localStorage.setItem('mode', _mode);
+  }, []);
+
+  const setLanguageAndSave = (language: string) => {
+    setLanguage(language);
+    i18n.changeLanguage(language);
+    localStorage.setItem('language', language);
   };
 
   return (
-    <TranslateContext.Provider value={{ mode, toggleMode }}>
-      <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
-    </TranslateContext.Provider>
+    <TranslateContext.Provider value={{ locales, language, setLanguageAndSave }}>{children}</TranslateContext.Provider>
   );
 };

@@ -1,6 +1,7 @@
 import { Box, Typography, Checkbox } from '@mui/material';
 import { ListItem as ListItemType } from '../types/List.ts';
 import MoreButton from './MoreButton.tsx';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   item: ListItemType;
@@ -9,6 +10,7 @@ type Props = {
   setItemName: (id: string, name: string) => void;
 };
 const ListItem = ({ item, setChecked, deleteItem, setItemName }: Props) => {
+  const { t } = useTranslation();
   return (
     <Box
       display={'flex'}
@@ -28,7 +30,7 @@ const ListItem = ({ item, setChecked, deleteItem, setItemName }: Props) => {
         {item.name}
       </Typography>
       <Box display={'flex'} flexDirection={'row'} gap={2} alignItems={'center'}>
-        <MoreButton actions={[{ name: 'Delete', action: () => deleteItem(item._id) }]} />
+        <MoreButton actions={[{ name: t('detail.item.delete'), action: () => deleteItem(item._id) }]} />
         <Checkbox
           defaultChecked={item.isDone}
           onChange={(event, checked) => {

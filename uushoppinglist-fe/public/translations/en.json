@@ -13,5 +13,14 @@
   "home.add-modal.item-button": "Add item",
   "home.add-modal.member-button": "Add member",
   "home.add-modal.save-button": "Save",
-  "home.add-modal.name-placeholder": "Name"
+  "home.add-modal.name-placeholder": "Name",
+  "detail.filter.all": "All",
+  "detail.filter.to-buy": "To buy",
+  "detail.item.delete": "Delete",
+  "detail.members.title": "Members",
+  "detail.members.button.add-member": "Add member",
+  "detail.members.button.close": "Close",
+  "detail.members.button.leave": "Leave",
+  "header.translations.en": "English",
+  "header.translations.cs": "Czech"
 }

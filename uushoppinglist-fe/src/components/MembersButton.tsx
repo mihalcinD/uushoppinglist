@@ -5,6 +5,7 @@ import { useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   isLoading: boolean;
@@ -17,6 +18,7 @@ const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd, ownerID 
   const [open, setOpen] = useState(false);
   const { user } = useAuth0();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const handleClose = () => setOpen(false);
   return (
     <>
@@ -27,7 +29,7 @@ const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd, ownerID 
           <PeopleAltOutlinedIcon fontSize="inherit" />
         </IconButton>
       )}
-      <ModalBox open={open} handleClose={handleClose} title={'Members'}>
+      <ModalBox open={open} handleClose={handleClose} title={t('detail.members.title')}>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'flex-end'} width={'100%'} mb={2}>
           <Button
             variant={'outlined'}
@@ -39,7 +41,7 @@ const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd, ownerID 
                   .join(''),
               );
             }}>
-            Add Member
+            {t('detail.members.button.add-member')}
           </Button>
         </Box>
 
@@ -69,10 +71,10 @@ const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd, ownerID 
               navigate('/');
             }}
             color={'error'}>
-            Leave
+            {t('detail.members.button.leave')}
           </Button>
           <Button variant={'outlined'} onClick={handleClose}>
-            close
+            {t('detail.members.button.close')}
           </Button>
         </Box>
       </ModalBox>
