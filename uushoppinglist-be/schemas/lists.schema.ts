@@ -10,7 +10,7 @@ const createSchema = {
 			type: 'string',
 			minLength: 1,
 		},
-		memberIDs: {
+		membersIDs: {
 			type: 'array',
 			items: userIdentifierSchema,
 		},
