@@ -8,11 +8,18 @@ type Props = {
   members?: string[];
   onUserDelete: (id: string) => void;
   onMemberAdd: (id: string) => void;
+  ownerID?: string;
 };
-const ButtonsGroup = ({ isLoading, addItem, members, onUserDelete, onMemberAdd }: Props) => {
+const ButtonsGroup = ({ isLoading, addItem, members, onUserDelete, onMemberAdd, ownerID }: Props) => {
   return (
     <Box display={'flex'} flexDirection={'row'} gap={2} alignItems={'center'}>
-      <MembersButton isLoading={isLoading} members={members} onDeleteUser={onUserDelete} onMemberAdd={onMemberAdd} />
+      <MembersButton
+        isLoading={isLoading}
+        members={members}
+        onDeleteUser={onUserDelete}
+        onMemberAdd={onMemberAdd}
+        ownerID={ownerID}
+      />
       {isLoading ? (
         <Skeleton variant="circular" width={56} height={56} />
       ) : (

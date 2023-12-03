@@ -4,16 +4,19 @@ import ModalBox from './Modal.tsx';
 import { useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   isLoading: boolean;
   members?: string[];
   onDeleteUser: (id: string) => void;
   onMemberAdd: (id: string) => void;
+  ownerID?: string;
 };
-const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd }: Props) => {
+const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd, ownerID }: Props) => {
   const [open, setOpen] = useState(false);
   const { user } = useAuth0();
+  const navigate = useNavigate();
   const handleClose = () => setOpen(false);
   return (
     <>
@@ -48,7 +51,7 @@ const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd }: Props)
                 label={member}
                 key={index}
                 onDelete={
-                  member !== user?.sub
+                  member !== user?.sub && user?.sub === ownerID
                     ? () => {
                         onDeleteUser(member);
                       }
@@ -58,7 +61,14 @@ const MembersButton = ({ isLoading, members, onDeleteUser, onMemberAdd }: Props)
             ))}
         </Box>
         <Box display={'flex'} flexDirection={'row'} justifyContent={'space-between'} width={'100%'} mt={15}>
-          <Button variant={'contained'} onClick={() => {}} color={'error'}>
+          <Button
+            variant={'contained'}
+            onClick={() => {
+              onDeleteUser(user?.sub ?? '');
+              handleClose();
+              navigate('/');
+            }}
+            color={'error'}>
             Leave
           </Button>
           <Button variant={'outlined'} onClick={handleClose}>

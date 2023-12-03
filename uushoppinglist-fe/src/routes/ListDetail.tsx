@@ -43,6 +43,7 @@ const ListDetail = () => {
           members={list?.membersIDs}
           onUserDelete={removeMember}
           onMemberAdd={addMember}
+          ownerID={list?.ownerID}
         />
       </Box>
       <ItemsList
