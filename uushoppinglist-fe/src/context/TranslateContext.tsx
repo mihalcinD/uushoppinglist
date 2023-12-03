@@ -24,7 +24,7 @@ export const TranslateProvider = ({ children }: Props) => {
       { code: 'cs', name: t('header.translations.cs') },
       { code: 'en', name: t('header.translations.en') },
     ],
-    [],
+    [i18n.language],
   );
   const [language, setLanguage] = useState<string>(locales[0].code);
 
