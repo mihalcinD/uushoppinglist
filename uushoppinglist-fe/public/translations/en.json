@@ -22,5 +22,8 @@
   "detail.members.button.close": "Close",
   "detail.members.button.leave": "Leave",
   "header.translations.en": "English",
-  "header.translations.cs": "Czech"
+  "header.translations.cs": "Czech",
+  "loading.title": "Authentication in progress...",
+  "login.title": "To continue to the app you have to login",
+  "login.button": "Login"
 }

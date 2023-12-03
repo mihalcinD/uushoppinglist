@@ -1,7 +1,10 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useTranslation } from 'react-i18next';
+
 const Login = () => {
   const { loginWithRedirect } = useAuth0();
+  const { t } = useTranslation();
   return (
     <Box
       gap={5}
@@ -12,10 +15,10 @@ const Login = () => {
       width={'100vw'}
       height={'100vh'}>
       <Typography variant="h4" component={'h1'}>
-        To continue to the app you have to login
+        {t('login.title')}
       </Typography>
       <Button variant={'contained'} onClick={() => loginWithRedirect()}>
-        Login
+        {t('login.button')}
       </Button>
     </Box>
   );

@@ -22,5 +22,8 @@
   "detail.members.button.close": "Zavřít",
   "detail.members.button.leave": "Odejít",
   "header.translations.en": "Angličtina",
-  "header.translations.cs": "Česky"
+  "header.translations.cs": "Česky",
+  "loading.title": "Probíhá přihlašování...",
+  "login.title": "Pro pokračování v aplikaci se musíte přihlásit",
+  "login.button": "Přihlásit se"
 }
