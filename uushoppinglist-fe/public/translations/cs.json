@@ -1,0 +1,17 @@
+{
+  "home.title": "Vaše nákupní seznamy",
+  "home.filter-all": "Vše",
+  "home.filter-owner": "Vlastník",
+  "home.filter-member": "Člen",
+  "home.filter-archived": "Archivované",
+  "home.list-tile.detail-button": "Zobrazit detail",
+  "home.list-tile.archived": "Archivované",
+  "home.list-tile.archive-button": "Archivovat",
+  "home.list-tile.delete-button": "Smazat",
+  "header.logout-button": "Odhlásit se",
+  "home.add-modal.title": "Vytvořit nový seznam",
+  "home.add-modal.item-button": "Přidat položku",
+  "home.add-modal.member-button": "Přidat člena",
+  "home.add-modal.save-button": "Uložit",
+  "home.add-modal.name-placeholder": "Jméno"
+}

@@ -5,19 +5,18 @@ import AddListButton from '../components/AddListButton.tsx';
 import ListsGrid from '../components/ListsGrid.tsx';
 import { useListsContext } from '../context/ListsContext.tsx';
 import { useEffect } from 'react';
-import useGet from '../hooks/api/crud/useGet.ts';
-import { ApiUrl } from '../hooks/api/api.const.ts';
 
+import { useTranslation } from 'react-i18next';
 const Home = () => {
   const { isLoading, lists, setFilter } = useListsContext();
-  const { refetch } = useGet({ url: ApiUrl().addList });
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {}, []);
 
   return (
     <ContentWrapper>
       <Typography variant="h2" component={'h1'} sx={{ fontWeight: '600', textAlign: 'left' }}>
-        Your shopping lists
+        {t('home.title')}
       </Typography>
       <Box
         display={'flex'}
@@ -32,28 +31,28 @@ const Home = () => {
           isLoading={false}
           actions={[
             {
-              label: 'All',
+              label: t('home.filter-all'),
               value: 'all',
               onSelect: () => {
                 setFilter('all');
               },
             },
             {
-              label: 'Owner',
+              label: t('home.filter-owner'),
               value: 'owner',
               onSelect: () => {
                 setFilter('owner');
               },
             },
             {
-              label: 'Member',
+              label: t('home.filter-member'),
               value: 'member',
               onSelect: () => {
                 setFilter('member');
               },
             },
             {
-              label: 'Archived',
+              label: t('home.filter-archived'),
               value: 'archived',
               onSelect: () => {
                 setFilter('archived');

@@ -5,7 +5,7 @@ import { MouseEvent, useState } from 'react';
 type Props = {
   actions: { name: string; action: () => void }[];
 };
-const MoreButton = ({ deleteItem, actions }: Props) => {
+const MoreButton = ({ actions }: Props) => {
   const [anchorMenu, setMenu] = useState<HTMLElement>();
   const handleOpenMenu = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();

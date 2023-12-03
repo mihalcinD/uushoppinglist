@@ -1,15 +1,18 @@
-import { AppBar, Box, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, IconButton, Menu, MenuItem, Stack, Toolbar, Typography } from '@mui/material';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import { useState, MouseEvent } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useThemeContext } from '../context/ThemeContext.tsx';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import LanguageButton from './LanguageButton.tsx';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { logout, user } = useAuth0();
   const { toggleMode, mode } = useThemeContext();
+  const { t } = useTranslation();
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -22,16 +25,14 @@ const Header = () => {
         sx={{
           justifyContent: 'space-between',
         }}>
-        <IconButton onClick={toggleMode} color="inherit">
-          {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-        </IconButton>
-        <IconButton
-          size="large"
-          aria-label="Home page"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          color="inherit"
-          onClick={handleOpenUserMenu}>
+        <Stack direction={'row'} gap={1}>
+          <IconButton size="large" onClick={toggleMode} color="inherit">
+            {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
+          <LanguageButton />
+        </Stack>
+
+        <IconButton size="large" color="inherit" onClick={handleOpenUserMenu}>
           <PermIdentityOutlinedIcon />
         </IconButton>
 
@@ -54,7 +55,7 @@ const Header = () => {
             <Typography textAlign="center">{user?.email}</Typography>
           </Box>
           <MenuItem onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
-            <Typography textAlign="center">Logout</Typography>
+            <Typography textAlign="center">{t('header.logout-button')}</Typography>
           </MenuItem>
         </Menu>
       </Toolbar>

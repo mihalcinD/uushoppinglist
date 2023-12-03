@@ -1,0 +1,17 @@
+{
+  "home.title": "Your shopping lists",
+  "home.filter-all": "All",
+  "home.filter-owner": "Owner",
+  "home.filter-member": "Member",
+  "home.filter-archived": "Archived",
+  "home.list-tile.detail-button": "Show detail",
+  "home.list-tile.archived": "Archived",
+  "home.list-tile.archive-button": "Archive",
+  "home.list-tile.delete-button": "Delete",
+  "header.logout-button": "Logout",
+  "home.add-modal.title": "Create new list",
+  "home.add-modal.item-button": "Add item",
+  "home.add-modal.member-button": "Add member",
+  "home.add-modal.save-button": "Save",
+  "home.add-modal.name-placeholder": "Name"
+}
