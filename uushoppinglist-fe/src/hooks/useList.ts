@@ -41,7 +41,9 @@ const UseList = ({ id }: Props) => {
     return new Promise<void>((resolve, reject) => {
       postItem({ name: 'New Item' })
         .then(list => {
-          setLocalList(list.result);
+          setLocalList(prevState => {
+            if (prevState) return { ...list.result, isOwner: prevState.isOwner };
+          });
           resolve();
         })
         .catch(() => {
@@ -160,7 +162,9 @@ const UseList = ({ id }: Props) => {
     return new Promise<void>((resolve, reject) => {
       postMember({ memberID })
         .then(list => {
-          setLocalList(list.result);
+          setLocalList(prevState => {
+            if (prevState) return { ...list.result, isOwner: prevState.isOwner };
+          });
           resolve();
         })
         .catch(() => {
