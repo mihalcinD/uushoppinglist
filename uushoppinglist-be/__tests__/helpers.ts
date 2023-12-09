@@ -14,5 +14,8 @@ export const next = jest.fn((data: any) => {
 	};
 });
 
-export const res = {} as Response;
+export const res = {
+	status: jest.fn(code => code),
+	json: jest.fn(object => object),
+} as any as Response;
 export const auth = { payload: { sub: '111111111111111111111111111111' } };

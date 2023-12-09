@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "add-build": "git add dist",
-    "test": "jest",
+    "test": "jest --verbose",
     "ts.check": "tsc --project tsconfig.json",
     "start": "nodemon --exec ts-node index.ts"
   },
